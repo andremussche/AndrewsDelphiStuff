@@ -1,0 +1,350 @@
+<SMART>
+  <project version="2" subversion="0" type="visual">
+    <name>smartclient</name>
+    <author></author>
+    <company></company>
+    <keywords></keywords>
+    <description></description>
+    <version>
+      <major>0</major>
+      <minor>0</minor>
+      <revision>0</revision>
+    </version>
+    <options>
+      <use_obfuscation>0</use_obfuscation>
+      <use_codepacking>0</use_codepacking>
+      <use_rangechecking>1</use_rangechecking>
+      <use_instancechecking>1</use_instancechecking>
+      <use_conditionchecking>1</use_conditionchecking>
+      <use_loopchecking>1</use_loopchecking>
+      <use_noinlinemagics>0</use_noinlinemagics>
+      <use_nosourcelocation>0</use_nosourcelocation>
+      <use_nortti>0</use_nortti>
+      <use_smartlinking>1</use_smartlinking>
+      <use_sourcemap>0</use_sourcemap>
+      <use_compresscss>0</use_compresscss>
+      <use_assertions>1</use_assertions>
+      <use_optimize>1</use_optimize>
+      <use_closures>0</use_closures>
+      <use_devirtualize>1</use_devirtualize>
+      <use_generate_manifest>1</use_generate_manifest>
+      <use_serve_manifest>0</use_serve_manifest>
+      <use_server>1</use_server>
+      <pause_after_execution>0</pause_after_execution>
+      <use_css_external>1</use_css_external>
+      <use_verbosity>1</use_verbosity>
+      <use_css_theme>Android-Holo.css</use_css_theme>
+      <use_ro_rodl></use_ro_rodl>
+      <use_hints_level>1</use_hints_level>
+      <use_main_body>1</use_main_body>
+      <javascript_only>0</javascript_only>
+      <use_custom_template>0</use_custom_template>
+      <use_custom_theme>0</use_custom_theme>
+      <output_name>index.html</output_name>
+      <execute_type>1</execute_type>
+      <executeable_name></executeable_name>
+      <executeable_params>%output%</executeable_params>
+      <use_pre-build_script>0</use_pre-build_script>
+      <pre-build_script></pre-build_script>
+      <use_pre-link_script>0</use_pre-link_script>
+      <pre-link_script></pre-link_script>
+      <use_post-build_script>0</use_post-build_script>
+      <post-build_script></post-build_script>
+      <conditional_defines></conditional_defines>
+      <handle_exceptions>1</handle_exceptions>
+      <auto_refresh>0</auto_refresh>
+    </options>
+    <globals />
+    <files>
+      <file type="unit">
+        <name>smartclient</name>
+        <created>2013-11-11T15:08:45.894Z</created>
+        <source>
+          <![CDATA[unit smartclient;
+
+interface
+
+uses 
+  w3system, w3components, w3forms, w3application, form1;
+
+type
+  TApplication = class(TW3CustomApplication)
+  private
+    { Private methods }
+    FForm1: TForm1;
+  public
+    { Public methods }
+    procedure ApplicationStarting; override;
+  end;
+
+implementation
+
+{ TApplication}
+
+procedure TApplication.ApplicationStarting;
+begin
+  // Add code above this line 
+  FForm1 := TForm1.Create(Display.View);
+  FForm1.Name := 'Form1';
+  RegisterFormInstance(FForm1, True);
+
+  inherited;
+end;
+
+
+end.
+]]>
+        </source>
+      </file>
+      <file type="main">
+        <name>smartclientApplication</name>
+        <created>2013-11-11T15:08:45.894Z</created>
+        <source>
+          <![CDATA[uses 
+  W3System, smartclient, socketioclient;
+
+var Application: TApplication;
+try
+  //InitVendorInfo;
+  Application := TApplication.Create;
+  Application.RunApp;
+except
+  on e: Exception do
+    ShowMessage(e.Message);
+end;
+]]>
+        </source>
+      </file>
+      <file type="form">
+        <name>Form1</name>
+        <created>2013-11-11T15:08:45.894Z</created>
+        <source>
+          <![CDATA[unit Form1;
+
+interface
+
+uses 
+  w3system, w3graphics, w3components, w3forms, w3fonts, w3borders, w3application,
+  W3ProgressBar, W3Label, W3Button, W3ComboBox,
+  socketioclient;
+
+type
+  TForm1=class(TW3form)
+    procedure W3Button2Click(Sender: TObject);
+    procedure W3Button1Click(Sender: TObject);
+  private
+    FSocket: JSocketIO;
+    {$I 'Form1:intf'}
+  protected
+    procedure InitializeObject; override;
+    procedure FinalizeObject; override;
+    procedure StyleTagObject; reintroduce; virtual;
+    procedure Resize; override;
+  end;
+
+implementation
+
+{ TForm1}
+
+procedure TForm1.W3Button1Click(Sender: TObject);
+begin
+  FSocket.emit('requestFromClient', [10],
+    procedure(aData: variant)
+    begin
+      pgProgress1.Value := aData;
+    end);
+end;
+
+procedure TForm1.W3Button2Click(Sender: TObject);
+begin
+  FSocket.emit('requestFromClient', [5],
+    procedure(aData: variant)
+    begin
+      pgProgress2.Value := aData;
+    end);
+end;
+
+procedure TForm1.InitializeObject;
+begin
+  inherited;
+  {$I 'Form1:impl'}
+
+  FSocket := socketio.connect('http://localhost:80');
+  FSocket.on('dataFromServer',
+    procedure(aData: variant)
+    begin
+      pgProgress1.Value := aData;
+      pgProgress2.Value := aData;
+    end);
+end;
+
+procedure TForm1.FinalizeObject;
+begin
+  inherited;
+end;
+ 
+procedure TForm1.Resize;
+begin
+  inherited;
+end;
+ 
+procedure TForm1.StyleTagObject;
+begin
+  // Custom styling
+end;
+ 
+end.
+]]>
+        </source>
+        <design>
+          <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<SmartForm>
+  <Created>2013-11-29T20:43:54.044</Created>
+  <Modified>2013-12-19T22:21:06.158</Modified>
+  <object type="TW3Form">
+    <Caption>W3Form</Caption>
+    <Width>200</Width>
+    <StyleClass>TW3Form</StyleClass>
+    <Height>64</Height>
+    <BorderRadius>0</BorderRadius>
+    <Color>536870911</Color>
+    <Name>Form1</Name>
+    <object type="TW3Label">
+      <Caption>Progress 1</Caption>
+      <Width>200</Width>
+      <Top>8</Top>
+      <StyleClass>TW3Label</StyleClass>
+      <Left>16</Left>
+      <Height>24</Height>
+      <BorderRadius>0</BorderRadius>
+      <Color>536870911</Color>
+      <Name>W3Label1</Name>
+    </object>
+    <object type="TW3ProgressBar">
+      <Total>100</Total>
+      <Width>200</Width>
+      <Top>40</Top>
+      <StyleClass>TW3ProgressBar</StyleClass>
+      <Left>16</Left>
+      <Height>24</Height>
+      <BorderRadius>0</BorderRadius>
+      <Color>536870911</Color>
+      <Name>pgProgress1</Name>
+    </object>
+    <object type="TW3Button">
+      <Caption>Increment 10</Caption>
+      <Width>200</Width>
+      <Top>72</Top>
+      <StyleClass>TW3Button</StyleClass>
+      <Left>16</Left>
+      <Height>24</Height>
+      <BorderRadius>0</BorderRadius>
+      <Color>536870911</Color>
+      <Name>W3Button1</Name>
+      <OnClick>W3Button1Click</OnClick>
+    </object>
+    <object type="TW3Label">
+      <Caption>Progress 2:</Caption>
+      <Width>200</Width>
+      <Top>8</Top>
+      <StyleClass>TW3Label</StyleClass>
+      <Left>256</Left>
+      <Height>24</Height>
+      <BorderRadius>0</BorderRadius>
+      <Color>536870911</Color>
+      <Name>W3Label2</Name>
+    </object>
+    <object type="TW3Button">
+      <Caption>Increment 5</Caption>
+      <Width>200</Width>
+      <Top>72</Top>
+      <StyleClass>TW3Button</StyleClass>
+      <Left>256</Left>
+      <Height>24</Height>
+      <BorderRadius>0</BorderRadius>
+      <Color>536870911</Color>
+      <Name>W3Button2</Name>
+      <OnClick>W3Button2Click</OnClick>
+    </object>
+    <object type="TW3ProgressBar">
+      <Total>100</Total>
+      <Width>200</Width>
+      <Top>40</Top>
+      <StyleClass>TW3ProgressBar</StyleClass>
+      <Left>256</Left>
+      <Height>24</Height>
+      <BorderRadius>0</BorderRadius>
+      <Color>536870911</Color>
+      <Name>pgProgress2</Name>
+    </object>
+  </object>
+</SmartForm>]]>
+        </design>
+      </file>
+      <file type="unit">
+        <name>socketioclient</name>
+        <created>2013-11-11T15:08:45.894Z</created>
+        <source>
+          <![CDATA[unit socketioclient;
+
+interface
+
+uses 
+  w3system;
+
+{$R 'file:socketio.js'}
+
+type
+  JSocketIO = class;
+  JFunction = procedure;
+
+  JSocketIOSocketFunction = procedure(aSocket: JSocketIO);
+  JSocketIODataFunction   = procedure(aData: variant);
+
+  JSocketIO = class external "Object"
+  public
+    function &in(room: string): JSocketIO;
+    function &to(room: string): JSocketIO;
+    function join(name: string; fn: JFunction): JSocketIO;
+    function unjoin(name: string; fn: JFunction): JSocketIO;
+    function &set(key: string; value: variant; fn: JFunction): JSocketIO;
+    function get(key: string; value: variant; fn: JFunction): JSocketIO;
+    function has(key: string; fn: JFunction): JSocketIO;
+    function del(key: string; fn: JFunction): JSocketIO;
+    function disconnect(): JSocketIO;
+    function send(data: variant; fn: JFunction): JSocketIO;
+    //function emit(ev: variant; data: array of variant): JSocketIO; overload;
+    function emit(ev: variant; data: array of variant; fn: JSocketIODataFunction): JSocketIO;
+    function &on(ns: string; fn: JSocketIODataFunction): JSocketIO;
+    property json: variant;
+    property log: variant;
+    property volatile: variant;
+    property broadcast: variant;
+  end;
+
+  JSocketIOClient = class external "Object"
+  public
+    function connect(aAddress: string): JSocketIO;
+  end;
+
+  function socketio: JSocketIOClient;
+
+  procedure alert; external;
+
+implementation
+
+function socketio: JSocketIOClient;
+begin
+  asm
+    @Result = io;
+  end;
+end;
+
+
+end.
+]]>
+        </source>
+      </file>
+    </files>
+  </project>
+</SMART>
