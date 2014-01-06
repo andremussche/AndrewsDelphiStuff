@@ -12,20 +12,31 @@ implementation
 
 uses
   NodeJS.Core, NodeJS.http,
+  Node_Static,
   socket.io;
 
 { TServer}
 
 procedure TServer.Run;
 begin
+  var fileserver := TNodeStaticServer.Create('./public');
+
   //start http server
   var server: JServer := http.createServer(
     procedure(request: JServerRequest; response: JServerResponse)
     begin
-      response.end('Hello World!')
+      Console.log('http request: ' + request.url);
+      if request.url = '/' then
+        response.end('Hello World!')
+      else
+        fileserver.serve(request, response);
     end);
-  server.listen(80, '');
-  Console.log('Server running at http://127.0.0.1:80/');
+
+  var port := 80;
+  if Process.env.PORT > 0 then
+    port := Process.env.PORT;
+  server.listen(port, '');
+  Console.log('Server running at http://127.0.0.1:' + port.ToString);
 
   var value := 0;
   var io := socketio().listen(server);

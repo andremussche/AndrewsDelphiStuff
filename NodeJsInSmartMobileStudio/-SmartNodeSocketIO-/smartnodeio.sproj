@@ -84,6 +84,11 @@ end;
         <created>2013-11-09T21:33:37.521Z</created>
         <filename>socket.io.pas</filename>
       </file>
+      <file type="unit">
+        <name>NodeJS.Core</name>
+        <created>2014-01-06T21:34:51.507Z</created>
+        <filename>NodeJS.Core.pas</filename>
+      </file>
     </files>
   </project>
 </SMART>

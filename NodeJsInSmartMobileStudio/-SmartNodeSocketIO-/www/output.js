@@ -41,19 +41,31 @@ var TServer = {
       TObject.$Init($);
    }
    /// procedure TServer.Run()
-   ///  [line: 19, column: 19, file: SmartServerMain]
+   ///  [line: 20, column: 19, file: SmartServerMain]
    ,Run:function(Self) {
+      var fileserver = null;
       var server = null;
+      var port$2 = 0;
       var value = 0;
       var io = null;
+      fileserver = TNodeStaticServer.Create$3(TNodeStaticServer,"./public",null);
       server = http().createServer(function (request$1, response) {
-         response.end("Hello World!");
+         Console().log("http request: "+$Check(request$1," in  [line: 28, column: 46, file: SmartServerMain]").url);
+         if ($Check(request$1," in  [line: 29, column: 18, file: SmartServerMain]").url=="/") {
+            response.end("Hello World!");
+         } else {
+            fileserver.serve(request$1,response);
+         }
       });
-      server.listen(80,"");
-      Console().log("Server running at http://127.0.0.1:80/");
+      port$2 = 80;
+      if ($Check(Process()," in TServer.Run [line: 36, column: 14, file: SmartServerMain]").env.PORT>0) {
+         port$2 = parseInt($Check(Process()," in TServer.Run [line: 37, column: 21, file: SmartServerMain]").env.PORT,10);
+      }
+      server.listen(port$2,"");
+      Console().log("Server running at http://127.0.0.1:"+port$2.toString());
       value = 0;
       io = socketio().listen(server);
-      $Check(io," in TServer.Run [line: 32, column: 13, file: SmartServerMain]").sockets.on("connection",function (socket$1) {
+      $Check(io," in TServer.Run [line: 43, column: 13, file: SmartServerMain]").sockets.on("connection",function (socket$1) {
          socket$1.emit("dataPushed",["test"].slice());
          socket$1.on("requestFromClient",function (data, callback) {
             Console().log("Received from client: "+data);
@@ -61,12 +73,36 @@ var TServer = {
             if (value>100) {
                value = 0;
             }
-            $CheckFunc(callback," in  [line: 42, column: 19, file: SmartServerMain]")(value);
-            $Check(io," in  [line: 44, column: 21, file: SmartServerMain]").sockets.emit("dataFromServer",[value].slice());
+            $CheckFunc(callback," in  [line: 53, column: 19, file: SmartServerMain]")(value);
+            $Check(io," in  [line: 55, column: 21, file: SmartServerMain]").sockets.emit("dataFromServer",[value].slice());
          });
       });
    }
    ,Destroy:TObject.Destroy
+};
+/// TNodeProcess_memoryUsage_result_object = class (TObject)
+///  [line: 238, column: 3, file: NodeJS.Core]
+var TNodeProcess_memoryUsage_result_object = {
+   $ClassName:"TNodeProcess_memoryUsage_result_object",
+   $Parent:TObject
+   ,$Init:function ($) {
+      TObject.$Init($);
+   }
+   ,Destroy:TObject.Destroy
+};
+/// TEventEmitter_listeners_result_object = class (TObject)
+///  [line: 127, column: 3, file: NodeJS.Core]
+var TEventEmitter_listeners_result_object = {
+   $ClassName:"TEventEmitter_listeners_result_object",
+   $Parent:TObject
+   ,$Init:function ($) {
+      TObject.$Init($);
+   }
+   ,Destroy:TObject.Destroy
+};
+function Process() {
+   var Result = null;
+    Result = process; return Result
 };
 function Console() {
    var Result = null;
@@ -102,6 +138,40 @@ var TReadableStream_pipe_options_object_stream = {
    $Parent:TObject
    ,$Init:function ($) {
       TObject.$Init($);
+   }
+   ,Destroy:TObject.Destroy
+};
+/// TNodeStaticServer = class (TObject)
+///  [line: 15, column: 3, file: Node_Static]
+var TNodeStaticServer = {
+   $ClassName:"TNodeStaticServer",
+   $Parent:TObject
+   ,$Init:function ($) {
+      TObject.$Init($);
+   }
+   /// function TNodeStaticServer.Create(aPath: String; aOptions: TNodeStaticOptions = nil) : JNodeStaticServer
+   ///  [line: 31, column: 34, file: Node_Static]
+   ,Create$3:function(Self, aPath, aOptions) {
+      var Result = null;
+      var nodestatic = undefined;
+      var server$1 = undefined;
+      nodestatic = require("node-static");
+      server$1 = null;
+      
+    server$1 = new ((nodestatic).Server)(aPath, aOptions);
+  Result = server$1;
+      return Result
+   }
+   ,Destroy:TObject.Destroy
+};
+/// TNodeStaticOptions = class (TObject)
+///  [line: 20, column: 3, file: Node_Static]
+var TNodeStaticOptions = {
+   $ClassName:"TNodeStaticOptions",
+   $Parent:TObject
+   ,$Init:function ($) {
+      TObject.$Init($);
+      $.cache$1 = 0;
    }
    ,Destroy:TObject.Destroy
 };
