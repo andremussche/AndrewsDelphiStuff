@@ -57,7 +57,7 @@ var TServer = {
             fileserver.serve(request$1,response);
          }
       });
-      port$2 = 80;
+      port$2 = 5000;
       if ($Check(Process()," in TServer.Run [line: 36, column: 14, file: SmartServerMain]").env.PORT>0) {
          port$2 = parseInt($Check(Process()," in TServer.Run [line: 37, column: 21, file: SmartServerMain]").env.PORT,10);
       }

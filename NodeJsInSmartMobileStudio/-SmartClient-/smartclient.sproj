@@ -169,7 +169,8 @@ begin
   inherited;
   {$I 'Form1:impl'}
 
-  FSocket := socketio.connect('http://localhost:80');
+  //FSocket := socketio.connect('http://localhost:80');  standalone test
+  FSocket := socketio.connect('');                       //cloud test
   FSocket.on('dataFromServer',
     procedure(aData: variant)
     begin
@@ -200,7 +201,7 @@ end.
           <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <SmartForm>
   <Created>2013-11-29T20:43:54.044</Created>
-  <Modified>2013-12-19T22:21:06.158</Modified>
+  <Modified>2014-01-09T21:08:37.654</Modified>
   <object type="TW3Form">
     <Caption>W3Form</Caption>
     <Width>200</Width>
