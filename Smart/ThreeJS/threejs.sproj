@@ -1,0 +1,187 @@
+<SMART>
+  <project version="2" subversion="0" type="visual">
+    <name>threejs</name>
+    <version>
+      <major>0</major>
+      <minor>0</minor>
+      <revision>0</revision>
+    </version>
+    <apple_specific>
+      <format_detection>0</format_detection>
+      <statusbar_style></statusbar_style>
+      <webapp_capable>0</webapp_capable>
+    </apple_specific>
+    <options>
+      <use_obfuscation>0</use_obfuscation>
+      <use_codepacking>0</use_codepacking>
+      <use_rangechecking>1</use_rangechecking>
+      <use_instancechecking>1</use_instancechecking>
+      <use_conditionchecking>1</use_conditionchecking>
+      <use_loopchecking>1</use_loopchecking>
+      <use_noinlinemagics>0</use_noinlinemagics>
+      <use_nosourcelocation>0</use_nosourcelocation>
+      <use_nortti>0</use_nortti>
+      <use_smartlinking>1</use_smartlinking>
+      <use_sourcemap>0</use_sourcemap>
+      <use_compresscss>0</use_compresscss>
+      <use_assertions>0</use_assertions>
+      <use_optimize>0</use_optimize>
+      <use_closures>0</use_closures>
+      <use_devirtualize>1</use_devirtualize>
+      <use_generate_manifest>1</use_generate_manifest>
+      <use_serve_manifest>0</use_serve_manifest>
+      <use_server>1</use_server>
+      <pause_after_execution>0</pause_after_execution>
+      <use_css_external>0</use_css_external>
+      <use_verbosity>1</use_verbosity>
+      <use_css_theme>iOS.css</use_css_theme>
+      <use_ro_rodl></use_ro_rodl>
+      <use_hints_level>1</use_hints_level>
+      <use_main_body>1</use_main_body>
+      <javascript_only>0</javascript_only>
+      <use_custom_template>0</use_custom_template>
+      <use_custom_theme>0</use_custom_theme>
+      <output_name>index.html</output_name>
+      <execute_type>0</execute_type>
+      <executeable_name></executeable_name>
+      <executeable_params></executeable_params>
+      <use_pre-build_script>0</use_pre-build_script>
+      <pre-build_script></pre-build_script>
+      <use_pre-link_script>0</use_pre-link_script>
+      <pre-link_script></pre-link_script>
+      <use_post-build_script>0</use_post-build_script>
+      <post-build_script></post-build_script>
+      <conditional_defines></conditional_defines>
+      <handle_exceptions>0</handle_exceptions>
+      <auto_refresh>0</auto_refresh>
+    </options>
+    <globals />
+    <files>
+      <file type="main">
+        <name>threejsApplication</name>
+        <created>2014-02-26T13:33:52.246Z</created>
+        <source>
+          <![CDATA[uses
+  three.THREE;
+
+function Document: variant;
+begin
+  asm @Result = document; end;
+end;
+
+function Window: variant;
+begin
+  asm @Result = window end;
+end;
+
+procedure RequestAnimationFrame(aFunction: procedure);
+begin
+  asm requestAnimationFrame(@aFunction); end;
+end;
+
+var scene  := new JScene;
+var camera := JPerspectiveCamera.Create(75, 1, 1, 1000);
+var renderer = new JWebGLRenderer(nil);
+renderer.setSize(400, 400);
+Document.body.appendChild(renderer.domElement);
+
+var geometry := new JCubeGeometry(1,1,1);
+var params   := new JMeshBasicMaterialParameters;
+params.color := 0x00ff00;
+var material := new JMeshBasicMaterial(params);
+var cube := new JMesh(geometry, material);
+scene.add(cube);
+
+camera.position.z := 5;
+
+procedure Render;
+begin
+  RequestAnimationFrame(Render);
+
+	cube.rotation.x := cube.rotation.x + 0.1;
+	cube.rotation.y := cube.rotation.y + 0.1;
+
+	renderer.render(scene, camera);
+end;
+Render();
+
+/*
+asm
+			//var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+			var geometry = new THREE.CubeGeometry(1,1,1);
+			var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+			var cube = new THREE.Mesh(geometry, material);
+			scene.add(cube);
+
+			camera.position.z = 5;
+
+			var render = function () {
+				requestAnimationFrame(render);
+
+				cube.rotation.x += 0.1;
+				cube.rotation.y += 0.1;
+
+				renderer.render(scene, camera);
+			};
+
+			render();
+end;
+*/]]>
+        </source>
+      </file>
+      <file type="html" template="1">
+        <name>default.html</name>
+        <created>2014-02-26T13:34:48.143Z</created>
+        <source>
+          <![CDATA[<!DOCTYPE html>
+<html manifest="app.manifest">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=yes">
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no"/>
+
+	<title><?pas=Project.Title?></title>
+
+  <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+
+	<script type="text/javascript">
+	/* This prevents the window being moved by touches,
+		to give the impression of a native app */
+	document.ontouchmove = function(e) { e.preventDefault(); }
+
+	/* Note: If you build with the CSS as an external file,
+	the app may execute before the CSS has been properly loaded.
+	You may want to use a different bootstrap mechanism. jQuery
+	provides a good preloading mechanism for instance. */
+
+	function bootstrap() { %appcode% }
+	window.onload = function () { bootstrap(); }
+	</script>
+</head>
+
+<body></body>
+
+</html>]]>
+        </source>
+      </file>
+      <file type="unit">
+        <name>three.Core</name>
+        <created>2014-02-26T13:41:49.483Z</created>
+        <filename>three.Core.pas</filename>
+      </file>
+      <file type="unit">
+        <name>three.THREE</name>
+        <created>2014-02-26T13:41:53.396Z</created>
+        <filename>three.THREE.pas</filename>
+      </file>
+    </files>
+  </project>
+</SMART>

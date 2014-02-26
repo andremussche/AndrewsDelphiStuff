@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html manifest="app.manifest">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=yes">
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no"/>
+
+	<title>threejs</title>
+
+  <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+
+	<script type="text/javascript">
+	/* This prevents the window being moved by touches,
+		to give the impression of a native app */
+	document.ontouchmove = function(e) { e.preventDefault(); }
+
+	/* Note: If you build with the CSS as an external file,
+	the app may execute before the CSS has been properly loaded.
+	You may want to use a different bootstrap mechanism. jQuery
+	provides a good preloading mechanism for instance. */
+
+	function bootstrap() { var TObject={
+	$ClassName: "TObject",
+	$Parent: null,
+	ClassName: function (s) { return s.$ClassName },
+	ClassType: function (s) { return s },
+	ClassParent: function (s) { return s.$Parent },
+	$Init: function () {},
+	Create: function (s) { return s },
+	Destroy: function (s) { for (var prop in s) if (s.hasOwnProperty(prop)) delete s.prop },
+	Destroy$: function(s) { return s.ClassType.Destroy(s) },
+	Free: function (s) { if (s!==null) s.ClassType.Destroy(s) }
+};
+var Exception={
+	$ClassName: "Exception",
+	$Parent: TObject,
+	$Init: function () { FMessage="" },
+	Create: function (s,Msg) { s.FMessage=Msg; return s }
+};
+function $New(c) { var i={ClassType:c}; c.$Init(i); return i };
+function $Extend(base, sub, props) {
+	function F() {};
+	F.prototype = base.prototype;
+	sub.prototype = new F();
+	sub.prototype.constructor = sub;
+	for (var n in props) {
+		if (props.hasOwnProperty(n)) {
+			sub.prototype[n]=props[n];
+		}
+	}
+};
+function $Check(i,z) { if (i) return i; throw Exception.Create($New(Exception),"Object not instantiated"+z); };
+/// JWrapping = class (JObject)
+///  [line: 19, column: 3, file: three.Core]
+function JWrapping() {
+}
+$Extend(Object,JWrapping,
+   {
+   });
+
+/// JUint8Array = class (JObject)
+///  [line: 34, column: 3, file: three.Core]
+function JUint8Array() {
+}
+$Extend(Object,JUint8Array,
+   {
+   });
+
+/// JTextureFilter = class (JObject)
+///  [line: 20, column: 3, file: three.Core]
+function JTextureFilter() {
+}
+$Extend(Object,JTextureFilter,
+   {
+   });
+
+/// JTextureDataType = class (JObject)
+///  [line: 21, column: 3, file: three.Core]
+function JTextureDataType() {
+}
+$Extend(Object,JTextureDataType,
+   {
+   });
+
+/// JSide = class (JObject)
+///  [line: 10, column: 3, file: three.Core]
+function JSide() {
+}
+$Extend(Object,JSide,
+   {
+   });
+
+/// JShadowMapType = class (JObject)
+///  [line: 9, column: 3, file: three.Core]
+function JShadowMapType() {
+}
+$Extend(Object,JShadowMapType,
+   {
+   });
+
+/// JShading = class (JObject)
+///  [line: 11, column: 3, file: three.Core]
+function JShading() {
+}
+$Extend(Object,JShading,
+   {
+   });
+
+/// JPixelType = class (JObject)
+///  [line: 22, column: 3, file: three.Core]
+function JPixelType() {
+}
+$Extend(Object,JPixelType,
+   {
+   });
+
+/// JPixelFormat = class (JObject)
+///  [line: 23, column: 3, file: three.Core]
+function JPixelFormat() {
+}
+$Extend(Object,JPixelFormat,
+   {
+   });
+
+/// JPathActions = class (JObject)
+///  [line: 36, column: 3, file: three.Core]
+function JPathActions() {
+}
+$Extend(Object,JPathActions,
+   {
+   });
+
+/// JMapping = class (JObject)
+///  [line: 18, column: 3, file: three.Core]
+function JMapping() {
+}
+$Extend(Object,JMapping,
+   {
+   });
+
+/// JLineType = class (JObject)
+///  [line: 30, column: 3, file: three.Core]
+function JLineType() {
+}
+$Extend(Object,JLineType,
+   {
+   });
+
+/// JImageData = class (JObject)
+///  [line: 32, column: 3, file: three.Core]
+function JImageData() {
+}
+$Extend(Object,JImageData,
+   {
+   });
+
+/// JHTMLImageElement = class (JObject)
+///  [line: 28, column: 3, file: three.Core]
+function JHTMLImageElement() {
+}
+$Extend(Object,JHTMLImageElement,
+   {
+   });
+
+/// JHTMLElement = class (JObject)
+///  [line: 27, column: 3, file: three.Core]
+function JHTMLElement() {
+}
+$Extend(Object,JHTMLElement,
+   {
+   });
+
+/// JHTMLCanvasElement = class (JObject)
+///  [line: 31, column: 3, file: three.Core]
+function JHTMLCanvasElement() {
+}
+$Extend(Object,JHTMLCanvasElement,
+   {
+   });
+
+/// JFrontFaceDirection = class (JObject)
+///  [line: 8, column: 3, file: three.Core]
+function JFrontFaceDirection() {
+}
+$Extend(Object,JFrontFaceDirection,
+   {
+   });
+
+/// JFloat32Array = class (JObject)
+///  [line: 26, column: 3, file: three.Core]
+function JFloat32Array() {
+}
+$Extend(Object,JFloat32Array,
+   {
+   });
+
+/// JCullFace = class (JObject)
+///  [line: 7, column: 3, file: three.Core]
+function JCullFace() {
+}
+$Extend(Object,JCullFace,
+   {
+   });
+
+/// JCompressedPixelFormat = class (JObject)
+///  [line: 24, column: 3, file: three.Core]
+function JCompressedPixelFormat() {
+}
+$Extend(Object,JCompressedPixelFormat,
+   {
+   });
+
+/// JCombine = class (JObject)
+///  [line: 17, column: 3, file: three.Core]
+function JCombine() {
+}
+$Extend(Object,JCombine,
+   {
+   });
+
+/// JColors = class (JObject)
+///  [line: 12, column: 3, file: three.Core]
+function JColors() {
+}
+$Extend(Object,JColors,
+   {
+   });
+
+/// JCanvasRenderingContext2D = class (JObject)
+///  [line: 29, column: 3, file: three.Core]
+function JCanvasRenderingContext2D() {
+}
+$Extend(Object,JCanvasRenderingContext2D,
+   {
+   });
+
+/// Jboolean = class (JObject)
+///  [line: 25, column: 3, file: three.Core]
+function Jboolean() {
+}
+$Extend(Object,Jboolean,
+   {
+   });
+
+/// JBlendingSrcFactor = class (JObject)
+///  [line: 16, column: 3, file: three.Core]
+function JBlendingSrcFactor() {
+}
+$Extend(Object,JBlendingSrcFactor,
+   {
+   });
+
+/// JBlendingEquation = class (JObject)
+///  [line: 14, column: 3, file: three.Core]
+function JBlendingEquation() {
+}
+$Extend(Object,JBlendingEquation,
+   {
+   });
+
+/// JBlendingDstFactor = class (JObject)
+///  [line: 15, column: 3, file: three.Core]
+function JBlendingDstFactor() {
+}
+$Extend(Object,JBlendingDstFactor,
+   {
+   });
+
+/// JBlending = class (JObject)
+///  [line: 13, column: 3, file: three.Core]
+function JBlending() {
+}
+$Extend(Object,JBlending,
+   {
+   });
+
+/// JArrayBuffer = class (JObject)
+///  [line: 33, column: 3, file: three.Core]
+function JArrayBuffer() {
+}
+$Extend(Object,JArrayBuffer,
+   {
+   });
+
+function RequestAnimationFrame(aFunction) {
+    requestAnimationFrame(aFunction); };
+function Render() {
+   RequestAnimationFrame(Render);
+   $Check($Check(cube$1," in Render [line: 38, column: 15]").rotation," in Render [line: 38, column: 18]").x = $Check($Check(cube$1," in Render [line: 38, column: 26]").rotation," in Render [line: 38, column: 35]").x+0.1;
+   $Check($Check(cube$1," in Render [line: 39, column: 15]").rotation," in Render [line: 39, column: 18]").y = $Check($Check(cube$1," in Render [line: 39, column: 26]").rotation," in Render [line: 39, column: 35]").y+0.1;
+   renderer.render(scene$1,camera$1);
+};
+function Document() {
+   var Result = undefined;
+    Result = document; return Result
+};
+var scene$1 = null;
+var camera$1 = null;
+var renderer = null;
+var geometry$4 = null;
+var params = null;
+var material$8 = null;
+var cube$1 = null;
+var $Application = function() {
+   scene$1 = new THREE.Scene();
+   camera$1 = new THREE.PerspectiveCamera(75,1,1,1000);
+   renderer = new THREE.WebGLRenderer(null);
+   renderer.setSize(400,400);
+   Document().body.appendChild($Check(renderer," [line: 23, column: 36]").domElement);
+   geometry$4 = new THREE.CubeGeometry(1,1,1);
+   params = new Object();
+   $Check(params," [line: 27, column: 14]").color = 65280;
+   material$8 = new THREE.MeshBasicMaterial(params);
+   cube$1 = new THREE.Mesh(geometry$4,material$8);
+   scene$1.add(cube$1);
+   $Check($Check(camera$1," [line: 32, column: 16]").position," [line: 32, column: 19]").z = 5;
+   Render();
+}
+$Application();
+
+ }
+	window.onload = function () { bootstrap(); }
+	</script>
+</head>
+
+<body></body>
+
+</html>
