@@ -1,0 +1,313 @@
+<SMART>
+  <project version="2" subversion="0" type="visual">
+    <name>htmltest</name>
+    <version>
+      <major>0</major>
+      <minor>0</minor>
+      <revision>0</revision>
+    </version>
+    <apple_specific>
+      <format_detection>1</format_detection>
+      <statusbar_style>default</statusbar_style>
+      <webapp_capable>1</webapp_capable>
+    </apple_specific>
+    <options>
+      <use_obfuscation>0</use_obfuscation>
+      <use_codepacking>0</use_codepacking>
+      <use_rangechecking>1</use_rangechecking>
+      <use_instancechecking>1</use_instancechecking>
+      <use_conditionchecking>1</use_conditionchecking>
+      <use_loopchecking>1</use_loopchecking>
+      <use_noinlinemagics>0</use_noinlinemagics>
+      <use_nosourcelocation>0</use_nosourcelocation>
+      <use_nortti>0</use_nortti>
+      <use_smartlinking>1</use_smartlinking>
+      <use_sourcemap>0</use_sourcemap>
+      <use_compresscss>0</use_compresscss>
+      <use_assertions>1</use_assertions>
+      <use_optimize>1</use_optimize>
+      <use_closures>0</use_closures>
+      <use_devirtualize>1</use_devirtualize>
+      <use_generate_manifest>1</use_generate_manifest>
+      <use_serve_manifest>0</use_serve_manifest>
+      <use_server>1</use_server>
+      <pause_after_execution>0</pause_after_execution>
+      <use_css_external>0</use_css_external>
+      <use_verbosity>1</use_verbosity>
+      <use_css_theme>iOS.css</use_css_theme>
+      <use_ro_rodl></use_ro_rodl>
+      <use_hints_level>1</use_hints_level>
+      <use_main_body>1</use_main_body>
+      <javascript_only>0</javascript_only>
+      <use_custom_template>0</use_custom_template>
+      <use_custom_theme>0</use_custom_theme>
+      <output_name>index.html</output_name>
+      <execute_type>0</execute_type>
+      <executeable_name></executeable_name>
+      <executeable_params></executeable_params>
+      <use_pre-build_script>0</use_pre-build_script>
+      <pre-build_script></pre-build_script>
+      <use_pre-link_script>0</use_pre-link_script>
+      <pre-link_script></pre-link_script>
+      <use_post-build_script>0</use_post-build_script>
+      <post-build_script></post-build_script>
+      <conditional_defines></conditional_defines>
+      <handle_exceptions>0</handle_exceptions>
+      <auto_refresh>0</auto_refresh>
+    </options>
+    <globals />
+    <files>
+      <file type="unit">
+        <name>htmltest</name>
+        <created>2014-02-13T12:04:46.729Z</created>
+        <source>
+          <![CDATA[unit htmltest;
+
+interface
+
+uses 
+  W3System, W3Components, W3Forms, W3Application, Form1;
+
+type
+  //TApplication = class(TW3CustomApplication)
+//  private
+//    FForm1: TForm1;
+//  protected
+//    procedure ApplicationStarting; override;
+//  end;
+  TApplication = class(TObject)
+  public
+    procedure RunApp;
+  end;
+
+implementation
+
+uses
+  jQuery.Core;
+
+{ TApplication}
+
+procedure TApplication.RunApp;
+begin
+  //attach onclick
+  jQuery.Core.JQuery('#btnOne').Click(
+    function(eventObject: JJQueryEventObject): variant
+    begin
+      ShowMessage('test');
+    end);
+
+end;
+
+//procedure TApplication.ApplicationStarting;
+//begin
+  //FForm1 := TForm1.Create(Display.View);
+  //FForm1.Name := 'Form1';
+  //RegisterFormInstance(FForm1, True);
+  // register other forms here
+
+//  inherited;
+//end;
+
+procedure Myfunction();
+begin
+  showmessage('test');
+end;
+
+initialization
+  asm
+    window.Myfunction = @Myfunction;
+  end;
+
+end.
+]]>
+        </source>
+      </file>
+      <file type="main">
+        <name>htmltestApplication</name>
+        <created>2014-02-13T12:04:46.729Z</created>
+        <source>
+          <![CDATA[uses htmltest;
+
+{$IFDEF SMART_INTERNAL_HANDLE_EXCEPTIONS}
+uses W3System;
+{$ENDIF}
+
+{$IFDEF SMART_INTERNAL_AUTO_REFRESH}
+uses W3AutoRefresh;
+TW3AutoRefresh.Create.Start;
+{$ENDIF}
+
+var Application: TApplication;
+
+{$IFDEF SMART_INTERNAL_HANDLE_EXCEPTIONS}
+try
+{$ENDIF}
+
+  Application := TApplication.Create;
+  Application.RunApp;
+
+{$IFDEF SMART_INTERNAL_HANDLE_EXCEPTIONS}
+except
+  on e: Exception do
+    ShowMessage(e.Message);
+end;
+{$ENDIF}
+]]>
+        </source>
+      </file>
+      <file type="form">
+        <name>Form1</name>
+        <created>2014-02-13T12:04:46.729Z</created>
+        <source>
+          <![CDATA[unit Form1;
+
+interface
+
+uses 
+  W3System, W3Graphics, W3Components, W3Forms, W3Fonts, W3Borders, W3Application, W3Button;
+
+type
+  TForm1=class(TW3form)
+  private
+    {$I 'Form1:intf'}
+  protected
+    procedure InitializeForm; override;
+    procedure InitializeObject; override;
+    procedure Resize; override;
+  end;
+
+implementation
+
+{ TForm1}
+
+procedure TForm1.InitializeForm;
+begin
+  inherited;
+  // this is a good place to initialize components
+end;
+
+procedure TForm1.InitializeObject;
+begin
+  inherited;
+  {$I 'Form1:impl'}
+end;
+ 
+procedure TForm1.Resize;
+begin
+  inherited;
+end;
+ 
+end.
+]]>
+        </source>
+        <design>
+          <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<SmartForm>
+  <Created>2014-02-13T12:04:46.776</Created>
+  <Modified>2014-02-13T12:26:35.333</Modified>
+  <object type="TW3Form">
+    <Caption>W3Form</Caption>
+    <Name>Form1</Name>
+    <object type="TW3Button">
+      <Caption>W3Button</Caption>
+      <Width>128</Width>
+      <Top>8</Top>
+      <Left>8</Left>
+      <Height>32</Height>
+      <Name>W3Button1</Name>
+    </object>
+  </object>
+</SmartForm>]]>
+        </design>
+      </file>
+      <file type="html" template="1">
+        <name>default.html</name>
+        <created>2014-02-13T12:16:30.845Z</created>
+        <source>
+          <![CDATA[<!DOCTYPE html>
+<html manifest="app.manifest">
+<head>
+	<title>Smart jQuery Mobile Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+
+ 	<script type="text/javascript">
+	/* This prevents the window being moved by touches,
+		to give the impression of a native app */
+	document.ontouchmove = function(e) { e.preventDefault(); }
+
+	/* Note: If you build with the CSS as an external file,
+	the app may execute before the CSS has been properly loaded.
+	You may want to use a different bootstrap mechanism. jQuery
+	provides a good preloading mechanism for instance. */
+
+	function bootstrap() { %appcode% }
+	window.onload = function () {
+    bootstrap();
+    Myfunction();
+  }
+	</script>
+</head>
+<body>
+
+<!-- Start of first page -->
+<div data-role="page" id="foo">
+
+	<div data-role="header" data-theme="b">
+		<h1>Foo</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<p>I'm first in the source order so I'm shown as the page.</p>
+		<p>View internal page called <a href="#bar" data-transition="slide">bar</a></p>
+
+    <button id="btnOne" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Click me!</button>
+
+    <label for="flip-checkbox">Flip toggle switch checkbox:</label>
+    <input type="checkbox" data-role="flipswitch" name="flip-checkbox" id="flip-checkbox" checked="">	</div><!-- /content -->
+
+    <label for="slider-2">Slider (default is "false"):</label>
+    <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="100" value="50">
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of second page -->
+<div data-role="page" id="bar">
+
+	<div data-role="header">
+		<h1>Bar</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
+		<p><a href="#foo" data-transition="slide" data-direction="reverse">Back to foo</a></p>
+	</div><!-- /content -->
+
+  <ul data-role="listview" data-theme="a" data-count-theme="b" data-inset="true">
+      <li><a href="#">Inbox <span class="ui-li-count">12</span></a></li>
+      <li><a href="#">Outbox <span class="ui-li-count">0</span></a></li>
+      <li><a href="#">Drafts <span class="ui-li-count">4</span></a></li>
+      <li><a href="#">Sent <span class="ui-li-count">328</span></a></li>
+      <li><a href="#">Trash <span class="ui-li-count">62</span></a></li>
+  </ul>
+
+</div><!-- /page -->
+
+</body>
+</html>]]>
+        </source>
+      </file>
+      <file type="unit">
+        <name>jquery.Core</name>
+        <created>2014-02-13T12:58:17.653Z</created>
+        <filename>jquery.Core.pas</filename>
+      </file>
+    </files>
+  </project>
+</SMART>

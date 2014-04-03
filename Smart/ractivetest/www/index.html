@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html manifest="app.manifest">
+<head>
+	<title>Smart Ractive.js binding/template Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src='lib/Ractive.js'></script>
+
+	<script type="text/javascript">
+	/* This prevents the window being moved by touches,
+		to give the impression of a native app */
+	document.ontouchmove = function(e) { e.preventDefault(); }
+
+	/* Note: If you build with the CSS as an external file,
+	the app may execute before the CSS has been properly loaded.
+	You may want to use a different bootstrap mechanism. jQuery
+	provides a good preloading mechanism for instance. */
+
+	function bootstrap() { var TObject={
+	$ClassName: "TObject",
+	$Parent: null,
+	ClassName: function (s) { return s.$ClassName },
+	ClassType: function (s) { return s },
+	ClassParent: function (s) { return s.$Parent },
+	$Init: function () {},
+	Create: function (s) { return s },
+	Destroy: function (s) { for (var prop in s) if (s.hasOwnProperty(prop)) delete s.prop },
+	Destroy$: function(s) { return s.ClassType.Destroy(s) },
+	Free: function (s) { if (s!==null) s.ClassType.Destroy(s) }
+};
+var Exception={
+	$ClassName: "Exception",
+	$Parent: TObject,
+	$Init: function () { FMessage="" },
+	Create: function (s,Msg) { s.FMessage=Msg; return s }
+};
+function $New(c) { var i={ClassType:c}; c.$Init(i); return i };
+function $Extend(base, sub, props) {
+	function F() {};
+	F.prototype = base.prototype;
+	sub.prototype = new F();
+	sub.prototype.constructor = sub;
+	for (var n in props) {
+		if (props.hasOwnProperty(n)) {
+			sub.prototype[n]=props[n];
+		}
+	}
+};
+function $Check(i,z) { if (i) return i; throw Exception.Create($New(Exception),"Object not instantiated"+z); };
+/// JRactiveOptions = class (JObject)
+///  [line: 14, column: 3, file: ractivetest]
+function JRactiveOptions() {
+}
+$Extend(Object,JRactiveOptions,
+   {
+      "el" : "",
+      "template" : "",
+      "data" : undefined
+   });
+
+/// TApplication = class (TObject)
+///  [line: 9, column: 3, file: ractivetest]
+var TApplication = {
+   $ClassName:"TApplication",
+   $Parent:TObject
+   ,$Init:function ($) {
+      TObject.$Init($);
+   }
+   /// procedure TApplication.RunApp()
+   ///  [line: 49, column: 24, file: ractivetest]
+   ,RunApp:function(Self) {
+      var options$1 = null;
+      /// anonymous TRecordSymbol
+      function Copy$a$1(s,d) {
+         d.value1=s.value1;
+         d.value2=s.value2;
+         return d;
+      }
+      function Clone$a$1($) {
+         return {
+            value1:$.value1,
+            value2:$.value2
+         }
+      }
+      function Pub$a$1($) {
+         return {
+            "value1" : $.value1
+            ,"value2" : $.value2
+         }
+      }
+      options$1 = new JRactiveOptions();
+      $Check(options$1," in TApplication.RunApp [line: 52, column: 11, file: ractivetest]").el = "output";
+      $Check(options$1," in TApplication.RunApp [line: 53, column: 11, file: ractivetest]").template = "\r\n    <p>Add 2 values:</p>\r\n    <label>Enter value 1: <input value='{{value1}}' type='number'></label><br>\r\n    <label>Enter value 2: <input value='{{value2}}' type='number'></label><br>\r\n    <p>Result is: {{value1+value2}}</p>\r\n    <button on-click='btnAnimateClick'>Animate value</button>\r\n    <p>Animated: {{result}}</p>";
+      $Check(options$1," in TApplication.RunApp [line: 54, column: 11, file: ractivetest]").data = Clone$a$1({value1:1,value2:1});
+      ractive = new Ractive(options$1);
+      ractive.on("btnAnimateClick",function () {
+         var value1$1 = undefined;
+         var value2$1 = undefined;
+         var result = undefined;
+         value1$1 = ractive.get("value1");
+         value2$1 = ractive.get("value2");
+         result = value1$1+value2$1;
+         if (!isNaN(Number(result))) {
+            ractive.animate("result",result);
+         }
+      });
+   }
+   ,Destroy:TObject.Destroy
+};
+/// TW3CustomBrowserAPI = class (TObject)
+///  [line: 239, column: 3, file: W3System]
+var TW3CustomBrowserAPI = {
+   $ClassName:"TW3CustomBrowserAPI",
+   $Parent:TObject
+   ,$Init:function ($) {
+      TObject.$Init($);
+   }
+   ,Destroy:TObject.Destroy
+};
+/// TW3BrowserVendor enumeration
+///  [line: 435, column: 3, file: W3System]
+var TW3BrowserVendor = [ "bvUnknown", "bviOS", "bvAndroid", "bvChrome", "bvSafari", "bvFirefox", "bvOpera", "bvIE" ];
+/// TPointF = record
+///  [line: 73, column: 3, file: W3System]
+function Copy$TPointF(s,d) {
+   d.X=s.X;
+   d.Y=s.Y;
+   return d;
+}
+function Clone$TPointF($) {
+   return {
+      X:$.X,
+      Y:$.Y
+   }
+}
+/// TPoint = record
+///  [line: 62, column: 3, file: W3System]
+function Copy$TPoint(s,d) {
+   d.X$1=s.X$1;
+   d.Y$1=s.Y$1;
+   return d;
+}
+function Clone$TPoint($) {
+   return {
+      X$1:$.X$1,
+      Y$1:$.Y$1
+   }
+}
+var Application = null;
+var ractive = null;
+var vUniqueNumber = 0;
+var vVendor = 0;
+var vDriver = null;
+var vRequestAnimFrame = null;
+var vCancelAnimFrame = null;
+var $Application = function() {
+   Application = TObject.Create($New(TApplication));
+   TApplication.RunApp(Application);
+}
+$Application();
+
+ }
+	window.onload = function () { bootstrap(); }
+	</script>
+</head>
+
+<body></body>
+	<title>Smart Ractive.js binding/template Demo</title>
+
+  <div id="output">
+  </div>
+
+</html>

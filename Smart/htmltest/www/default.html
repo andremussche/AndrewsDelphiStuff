@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html manifest="app.manifest">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=yes">
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no"/>
+
+	<title><?pas=Project.Title?></title>
+
+	<%stylecode%>
+	<?pas
+	for var s in Compiler.Resources("text/css") do
+		PrintLn('<link rel="stylesheet" href="'+s+'">');
+	for var s in Compiler.Resources("text/javascript") do
+		PrintLn('<script src="'+s+'" type="text/javascript"></script>');
+	for var s in Compiler.AppleTouchIcons do
+		PrintLn('<script src="'+s+'" type="text/javascript"></script>');
+	?>
+
+	<script type="text/javascript">
+	/* This prevents the window being moved by touches,
+		to give the impression of a native app */
+	document.ontouchmove = function(e) { e.preventDefault(); }
+
+	/* Note: If you build with the CSS as an external file,
+	the app may execute before the CSS has been properly loaded.
+	You may want to use a different bootstrap mechanism. jQuery
+	provides a good preloading mechanism for instance. */
+
+	function bootstrap() { %appcode% }
+	window.onload = function () { bootstrap(); }
+	</script>
+</head>
+
+<body></body>
+
+</html>

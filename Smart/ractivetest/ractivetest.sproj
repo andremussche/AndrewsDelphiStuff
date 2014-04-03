@@ -1,0 +1,207 @@
+<SMART>
+  <project version="2" subversion="0" type="visual">
+    <name>ractivetest</name>
+    <author></author>
+    <company></company>
+    <keywords></keywords>
+    <description></description>
+    <version>
+      <major>0</major>
+      <minor>0</minor>
+      <revision>0</revision>
+    </version>
+    <options>
+      <use_obfuscation>0</use_obfuscation>
+      <use_codepacking>0</use_codepacking>
+      <use_rangechecking>1</use_rangechecking>
+      <use_instancechecking>1</use_instancechecking>
+      <use_conditionchecking>1</use_conditionchecking>
+      <use_loopchecking>1</use_loopchecking>
+      <use_noinlinemagics>0</use_noinlinemagics>
+      <use_nosourcelocation>0</use_nosourcelocation>
+      <use_nortti>0</use_nortti>
+      <use_smartlinking>1</use_smartlinking>
+      <use_sourcemap>0</use_sourcemap>
+      <use_compresscss>0</use_compresscss>
+      <use_assertions>1</use_assertions>
+      <use_optimize>1</use_optimize>
+      <use_closures>0</use_closures>
+      <use_devirtualize>1</use_devirtualize>
+      <use_generate_manifest>1</use_generate_manifest>
+      <use_serve_manifest>0</use_serve_manifest>
+      <use_server>1</use_server>
+      <pause_after_execution>0</pause_after_execution>
+      <use_css_external>0</use_css_external>
+      <use_verbosity>1</use_verbosity>
+      <use_css_theme>iOS.css</use_css_theme>
+      <use_ro_rodl></use_ro_rodl>
+      <use_hints_level>1</use_hints_level>
+      <use_main_body>1</use_main_body>
+      <javascript_only>0</javascript_only>
+      <use_custom_template>0</use_custom_template>
+      <use_custom_theme>0</use_custom_theme>
+      <output_name>index.html</output_name>
+      <execute_type>0</execute_type>
+      <executeable_name></executeable_name>
+      <executeable_params></executeable_params>
+      <use_pre-build_script>0</use_pre-build_script>
+      <pre-build_script></pre-build_script>
+      <use_pre-link_script>0</use_pre-link_script>
+      <pre-link_script></pre-link_script>
+      <use_post-build_script>0</use_post-build_script>
+      <post-build_script></post-build_script>
+      <conditional_defines></conditional_defines>
+      <handle_exceptions>0</handle_exceptions>
+      <auto_refresh>0</auto_refresh>
+    </options>
+    <globals />
+    <files>
+      <file type="unit">
+        <name>ractivetest</name>
+        <created>2014-02-13T21:08:22.060Z</created>
+        <source>
+          <![CDATA[unit ractivetest;
+
+interface
+
+uses 
+  W3System;
+
+type
+  TApplication = class(TObject)
+  public
+    procedure RunApp;
+  end;
+
+  JRactiveOptions = class(JObject)
+    el: string;
+    template: string;
+    data: variant;
+  end;
+
+  TProcedure = procedure;
+
+  JRactive = class external 'Ractive'
+    constructor Create(aOptions: JRactiveOptions);
+
+    procedure update;
+    procedure &set(aName: string; aValue: Variant);
+    procedure animate(aName: string; aValue: Variant);
+    function  get(aName: string): Variant;
+    procedure &on(aEvent: string; aCallback: TProcedure);
+  end;
+
+implementation
+
+{ TApplication}
+
+const
+  //inline template, but can also be external html/template file
+  C_template= "
+    <p>Add 2 values:</p>
+    <label>Enter value 1: <input value='{{value1}}' type='number'></label><br>
+    <label>Enter value 2: <input value='{{value2}}' type='number'></label><br>
+    <p>Result is: {{value1+value2}}</p>
+    <button on-click='btnAnimateClick'>Animate value</button>
+    <p>Animated: {{result}}</p>";
+
+var
+  ractive: JRactive;
+
+procedure TApplication.RunApp;
+begin
+  var options      := new JRactiveOptions;
+  options.el       := 'output';    //id of our div
+  options.template := C_template;
+  options.data := record
+    value1, value2 = 1;
+  end;
+
+  ractive := new JRactive(options);
+  ractive.on('btnAnimateClick',
+    procedure
+    begin
+      var value1 := ractive.get('value1');  //or use options.data
+      var value2 := ractive.get('value2');
+      var result := value1 + value2;
+      if not isnan(result) then
+        ractive.animate('result',result);  //note: also a complete object tree can be animated! so not only a single value
+    end);
+end;
+
+end.
+]]>
+        </source>
+      </file>
+      <file type="main">
+        <name>ractivetestApplication</name>
+        <created>2014-02-13T21:08:22.060Z</created>
+        <source>
+          <![CDATA[uses ractivetest;
+
+{$IFDEF SMART_INTERNAL_HANDLE_EXCEPTIONS}
+uses W3System;
+{$ENDIF}
+
+{$IFDEF SMART_INTERNAL_AUTO_REFRESH}
+uses W3AutoRefresh;
+TW3AutoRefresh.Create.Start;
+{$ENDIF}
+
+var Application: TApplication;
+
+{$IFDEF SMART_INTERNAL_HANDLE_EXCEPTIONS}
+try
+{$ENDIF}
+
+  Application := TApplication.Create;
+  Application.RunApp;
+
+{$IFDEF SMART_INTERNAL_HANDLE_EXCEPTIONS}
+except
+  on e: Exception do
+    ShowMessage(e.Message);
+end;
+{$ENDIF}
+]]>
+        </source>
+      </file>
+      <file type="html" template="1">
+        <name>default.html</name>
+        <created>2014-02-13T21:09:55.092Z</created>
+        <source>
+          <![CDATA[<!DOCTYPE html>
+<html manifest="app.manifest">
+<head>
+	<title>Smart Ractive.js binding/template Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src='lib/Ractive.js'></script>
+
+	<script type="text/javascript">
+	/* This prevents the window being moved by touches,
+		to give the impression of a native app */
+	document.ontouchmove = function(e) { e.preventDefault(); }
+
+	/* Note: If you build with the CSS as an external file,
+	the app may execute before the CSS has been properly loaded.
+	You may want to use a different bootstrap mechanism. jQuery
+	provides a good preloading mechanism for instance. */
+
+	function bootstrap() { %appcode% }
+	window.onload = function () { bootstrap(); }
+	</script>
+</head>
+
+<body></body>
+	<title>Smart Ractive.js binding/template Demo</title>
+
+  <div id="output">
+  </div>
+
+</html>]]>
+        </source>
+      </file>
+    </files>
+  </project>
+</SMART>
