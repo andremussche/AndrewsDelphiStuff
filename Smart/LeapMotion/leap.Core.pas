@@ -4,7 +4,6 @@ interface
 
 {forward type declarations}
 type
-  JFunction= class(JObject);
   Jboolean= class(JObject);
   JWebSocket= class(JObject);
   JType= class(JObject);
@@ -22,12 +21,15 @@ type
   JMatrix = class;
   JVector3 = class;
 
-  JEventDispatcher = class external "Object"
+  JFunction= procedure;
+  JLeapEventFunction = procedure(event:JLeapEvent);
+
+  JEventDispatcher = class external "EventDispatcher"
   public
     procedure constructor_();
-    function hasEventListener(&type: string; listener: JFunction): Jboolean;
-    procedure addEventListener(typeStr: string; listenerFunction: JFunction);
-    procedure removeEventListener(typeStr: string; listenerFunction: JFunction);
+    function hasEventListener(&type: string; listener: JLeapEventFunction): Jboolean;
+    procedure addEventListener(typeStr: string; listenerFunction: JLeapEventFunction);
+    procedure removeEventListener(typeStr: string; listenerFunction: JLeapEventFunction);
     procedure dispatchEvent(event: JLeapEvent);
     property {private} listeners: variant;
   end;
@@ -39,7 +41,7 @@ type
     procedure onFrame(controller: JController; frame: JFrame);
     procedure onInit(controller: JController);
   end;
-  JDefaultListener = class external(JListener)
+  JDefaultListener = class external "DefaultListener" (JListener)
   public
     procedure constructor_();
     procedure onConnect(controller: JController);
@@ -48,21 +50,21 @@ type
     procedure onFrame(controller: JController; frame: JFrame);
     procedure onInit(controller: JController);
   end;
-  JLeapEvent = class external "Object"
+  JLeapEvent = class external "LeapEvent"
   public
     procedure constructor_(&type: string; targetListener: JListener; frame: JFrame);overload;
     function getTarget(): variant;
     function getType(): string;
-    property {static?} LEAPMOTION_INIT: string;
-    property {static?} LEAPMOTION_CONNECTED: string;
-    property {static?} LEAPMOTION_DISCONNECTED: string;
-    property {static?} LEAPMOTION_EXIT: string;
-    property {static?} LEAPMOTION_FRAME: string;
+    class property {static?} LEAPMOTION_INIT: string;
+    class property {static?} LEAPMOTION_CONNECTED: string;
+    class property {static?} LEAPMOTION_DISCONNECTED: string;
+    class property {static?} LEAPMOTION_EXIT: string;
+    class property {static?} LEAPMOTION_FRAME: string;
     property {private} _type: variant;
     property {private} _target: variant;
     property {public} frame: JFrame;
   end;
-  JLeapUtil = class external "Object"
+  JLeapUtil = class external "LeapUtil"
   public
     procedure constructor_();
     function toDegrees(radians: integer): integer;
@@ -85,14 +87,14 @@ type
     function clamp(inVal: integer; minVal: integer; maxVal: integer): integer;
     function lerp(a: integer; b: integer; coefficient: integer): integer;
     function lerpVector(vec1: JVector3; vec2: JVector3; coefficient: integer): JVector3;
-    property {static?} PI: integer;
-    property {static?} DEG_TO_RAD: integer;
-    property {static?} RAD_TO_DEG: integer;
-    property {static?} TWO_PI: integer;
-    property {static?} HALF_PI: integer;
-    property {static?} EPSILON: integer;
+    class property {static?} PI: integer;
+    class property {static?} DEG_TO_RAD: integer;
+    class property {static?} RAD_TO_DEG: integer;
+    class property {static?} TWO_PI: integer;
+    class property {static?} HALF_PI: integer;
+    class property {static?} EPSILON: integer;
   end;
-  JController = class external(JEventDispatcher)
+  JController = class external "Controller" (JEventDispatcher)
   public
     procedure constructor_(host: string);overload;
     procedure getHandByID(frame: Variant; id: Variant);
@@ -109,7 +111,7 @@ type
     property {public} _isConnected: Jboolean;
     property {public} _isGesturesEnabled: Jboolean;
   end;
-  JInteractionBox = class external "Object"
+  JInteractionBox = class external "InteractionBox"
   public
     procedure constructor_();
     function denormalizePoint(normalizedPosition: JVector3): JVector3;
@@ -124,9 +126,9 @@ type
     property {public} width: integer;
   end;
 
-TZone = (ZONE_NONE = 0, ZONE_HOVERING = 1, ZONE_TOUCHING = 2, );
+TZone = (ZONE_NONE = 0, ZONE_HOVERING = 1, ZONE_TOUCHING = 2);
 
-  JPointable = class external "Object"
+  JPointable = class external "Pointable"
   public
     procedure constructor_();
     function isValid(): Jboolean;
@@ -149,10 +151,10 @@ TZone = (ZONE_NONE = 0, ZONE_HOVERING = 1, ZONE_TOUCHING = 2, );
     property {public} isTool: Jboolean;
   end;
 
-TState = (STATE_INVALID = 0, STATE_START = 1, STATE_UPDATE = 2, STATE_STOP = 3, );
-T&Type = (TYPE_INVALID = 4, TYPE_SWIPE = 5, TYPE_CIRCLE = 6, TYPE_SCREEN_TAP = 7, TYPE_KEY_TAP = 8, );
+TState = (STATE_INVALID = 0, STATE_START = 1, STATE_UPDATE = 2, STATE_STOP = 3);
+TType = (TYPE_INVALID = 4, TYPE_SWIPE = 5, TYPE_CIRCLE = 6, TYPE_SCREEN_TAP = 7, TYPE_KEY_TAP = 8);
 
-  JGesture = class external "Object"
+  JGesture = class external "Gesture"
   public
     procedure constructor_();
     function isEqualTo(other: JGesture): Jboolean;
@@ -168,17 +170,17 @@ T&Type = (TYPE_INVALID = 4, TYPE_SWIPE = 5, TYPE_CIRCLE = 6, TYPE_SCREEN_TAP = 7
     property {public} state: JState;
     property {public} &type: JType;
   end;
-  JFinger = class external(JPointable)
+  JFinger = class external "Finger" (JPointable)
   public
     procedure constructor_();
     function invalid(): JFinger;
   end;
-  JTool = class external(JPointable)
+  JTool = class external "Tool" (JPointable)
   public
     procedure constructor_();
     function invalid(): JTool;
   end;
-  JHand = class external "Object"
+  JHand = class external "Hand"
   public
     procedure constructor_();
     function isValid(): Jboolean;
@@ -209,7 +211,7 @@ T&Type = (TYPE_INVALID = 4, TYPE_SWIPE = 5, TYPE_CIRCLE = 6, TYPE_SCREEN_TAP = 7
     property {public} scaleFactorNumber: integer;
     property {public} translationVector: JVector3;
   end;
-  JFrame = class external "Object"
+  JFrame = class external "Frame"
   public
     procedure constructor_();
     function hand(id: integer): JHand;
@@ -240,7 +242,7 @@ T&Type = (TYPE_INVALID = 4, TYPE_SWIPE = 5, TYPE_CIRCLE = 6, TYPE_SCREEN_TAP = 7
     property {public} translationVector: JVector3;
     property {public} controller: JController;
   end;
-  JMatrix = class external "Object"
+  JMatrix = class external "Matrix"
   public
     procedure constructor_(x: JVector3; y: JVector3; z: JVector3; _origin: JVector3);overload;
     procedure setRotation(_axis: JVector3; angleRadians: integer);
@@ -257,45 +259,45 @@ T&Type = (TYPE_INVALID = 4, TYPE_SWIPE = 5, TYPE_CIRCLE = 6, TYPE_SCREEN_TAP = 7
     property {public} yBasis: JVector3;
     property {public} zBasis: JVector3;
   end;
-  JCircleGesture = class external(JGesture)
+  JCircleGesture = class external "CircleGesture" (JGesture)
   public
     procedure constructor_();
-    property {static?} classType: integer;
+    class property {static?} classType: integer;
     property {public} center: JVector3;
     property {public} normal: JVector3;
     property {public} pointable: JPointable;
     property {public} progress: integer;
     property {public} radius: integer;
   end;
-  JKeyTapGesture = class external(JGesture)
+  JKeyTapGesture = class external "KeyTapGesture" (JGesture)
   public
     procedure constructor_();
-    property {static?} classType: integer;
+    class property {static?} classType: integer;
     property {public} direction: JVector3;
     property {public} pointable: JPointable;
     property {public} position: JVector3;
     property {public} progress: integer;
   end;
-  JScreenTapGesture = class external(JGesture)
+  JScreenTapGesture = class external "ScreenTapGesture" (JGesture)
   public
     procedure constructor_();
-    property {static?} classType: integer;
+    class property {static?} classType: integer;
     property {public} direction: JVector3;
     property {public} pointable: JPointable;
     property {public} position: JVector3;
     property {public} progress: integer;
   end;
-  JSwipeGesture = class external(JGesture)
+  JSwipeGesture = class external "SwipeGesture" (JGesture)
   public
     procedure constructor_();
-    property {static?} classType: integer;
+    class property {static?} classType: integer;
     property {public} direction: JVector3;
     property {public} pointable: JPointable;
     property {public} position: JVector3;
     property {public} speed: integer;
     property {public} startPosition: JVector3;
   end;
-  JVector3 = class external "Object"
+  JVector3 = class external "Vector3"
   public
     procedure constructor_(x: integer; y: integer; z: integer);
     function opposite(): JVector3;
