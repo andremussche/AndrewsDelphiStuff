@@ -1,4 +1,4 @@
-export declare class EventDispatcher {
+ declare class EventDispatcher {
     private listeners;
     constructor();
     public hasEventListener(type: string, listener: Function): boolean;
@@ -6,14 +6,14 @@ export declare class EventDispatcher {
     public removeEventListener(typeStr: string, listenerFunction: Function): void;
     public dispatchEvent(event: LeapEvent): void;
 }
-export interface Listener {
+ interface Listener {
     onConnect(controller: Controller): void;
     onDisconnect(controller: Controller): void;
     onExit(controller: Controller): void;
     onFrame(controller: Controller, frame: Frame): void;
     onInit(controller: Controller): void;
 }
-export declare class DefaultListener extends EventDispatcher implements Listener {
+ declare class DefaultListener extends EventDispatcher implements Listener {
     constructor();
     public onConnect(controller: Controller): void;
     public onDisconnect(controller: Controller): void;
@@ -21,7 +21,7 @@ export declare class DefaultListener extends EventDispatcher implements Listener
     public onFrame(controller: Controller, frame: Frame): void;
     public onInit(controller: Controller): void;
 }
-export declare class LeapEvent {
+ declare class LeapEvent {
     static LEAPMOTION_INIT: string;
     static LEAPMOTION_CONNECTED: string;
     static LEAPMOTION_DISCONNECTED: string;
@@ -34,7 +34,7 @@ export declare class LeapEvent {
     public getTarget(): any;
     public getType(): string;
 }
-export declare class LeapUtil {
+ declare class LeapUtil {
     static PI: number;
     static DEG_TO_RAD: number;
     static RAD_TO_DEG: number;
@@ -63,7 +63,7 @@ export declare class LeapUtil {
     static lerp(a: number, b: number, coefficient: number): number;
     static lerpVector(vec1: Vector3, vec2: Vector3, coefficient: number): Vector3;
 }
-export declare class Controller extends EventDispatcher {
+ declare class Controller extends EventDispatcher {
     private listener;
     public frameHistory: Frame[];
     private latestFrame;
@@ -79,7 +79,7 @@ export declare class Controller extends EventDispatcher {
     public isGestureEnabled(type: Type): boolean;
     public isConnected(): boolean;
 }
-export declare class InteractionBox {
+ declare class InteractionBox {
     public center: Vector3;
     public depth: number;
     public height: number;
@@ -92,12 +92,12 @@ export declare class InteractionBox {
     static invalid(): InteractionBox;
     public toString(): string;
 }
-export declare enum Zone {
+ declare enum Zone {
     ZONE_NONE = 0,
     ZONE_HOVERING = 1,
     ZONE_TOUCHING = 2,
 }
-export declare class Pointable {
+ declare class Pointable {
     public touchZone: number;
     public touchDistance: number;
     public direction: Vector3;
@@ -118,20 +118,20 @@ export declare class Pointable {
     static invalid(): Pointable;
     public toString(): string;
 }
-export declare enum State {
+ declare enum State {
     STATE_INVALID = 0,
     STATE_START = 1,
     STATE_UPDATE = 2,
     STATE_STOP = 3,
 }
-export declare enum Type {
+ declare enum Type {
     TYPE_INVALID = 4,
     TYPE_SWIPE = 5,
     TYPE_CIRCLE = 6,
     TYPE_SCREEN_TAP = 7,
     TYPE_KEY_TAP = 8,
 }
-export declare class Gesture {
+ declare class Gesture {
     public duration: number;
     public durationSeconds: number;
     public frame: Frame;
@@ -146,15 +146,15 @@ export declare class Gesture {
     static invalid(): Gesture;
     public toString(): string;
 }
-export declare class Finger extends Pointable {
+ declare class Finger extends Pointable {
     constructor();
     static invalid(): Finger;
 }
-export declare class Tool extends Pointable {
+ declare class Tool extends Pointable {
     constructor();
     static invalid(): Tool;
 }
-export declare class Hand {
+ declare class Hand {
     public direction: Vector3;
     public fingers: Finger[];
     public frame: Frame;
@@ -184,7 +184,7 @@ export declare class Hand {
     public translation(sinceFrame: Frame): Vector3;
     static invalid(): Hand;
 }
-export declare class Frame {
+ declare class Frame {
     public fingers: Finger[];
     public hands: Hand[];
     public pointables: Pointable[];
@@ -214,7 +214,7 @@ export declare class Frame {
     public isValid(): boolean;
     static invalid(): Frame;
 }
-export declare class Matrix {
+ declare class Matrix {
     public origin: Vector3;
     public xBasis: Vector3;
     public yBasis: Vector3;
@@ -230,7 +230,7 @@ export declare class Matrix {
     static identity(): Matrix;
     public toString(): string;
 }
-export declare class CircleGesture extends Gesture {
+ declare class CircleGesture extends Gesture {
     static classType: number;
     public center: Vector3;
     public normal: Vector3;
@@ -239,7 +239,7 @@ export declare class CircleGesture extends Gesture {
     public radius: number;
     constructor();
 }
-export declare class KeyTapGesture extends Gesture {
+ declare class KeyTapGesture extends Gesture {
     static classType: number;
     public direction: Vector3;
     public pointable: Pointable;
@@ -247,7 +247,7 @@ export declare class KeyTapGesture extends Gesture {
     public progress: number;
     constructor();
 }
-export declare class ScreenTapGesture extends Gesture {
+ declare class ScreenTapGesture extends Gesture {
     static classType: number;
     public direction: Vector3;
     public pointable: Pointable;
@@ -255,7 +255,7 @@ export declare class ScreenTapGesture extends Gesture {
     public progress: number;
     constructor();
 }
-export declare class SwipeGesture extends Gesture {
+ declare class SwipeGesture extends Gesture {
     static classType: number;
     public direction: Vector3;
     public pointable: Pointable;
@@ -264,7 +264,7 @@ export declare class SwipeGesture extends Gesture {
     public startPosition: Vector3;
     constructor();
 }
-export declare class Vector3 {
+ declare class Vector3 {
     public x: number;
     public y: number;
     public z: number;

@@ -3,8 +3,8 @@ var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
-};
-define(["require", "exports"], function(require, exports) {
+}; 
+/*define(["require", "exports"], function(require, exports) { */  function LoadLeap(exports) {
     /**
     * The EventDispatcher class provides strongly typed events.
     */
@@ -3155,7 +3155,7 @@ define(["require", "exports"], function(require, exports) {
         * @return
         *
         */
-        Vector3.up = function () {
+        Vector3.up = function () { 
             return this.yAxis();
         };
 
@@ -3188,5 +3188,8 @@ define(["require", "exports"], function(require, exports) {
         return Vector3;
     })();
     exports.Vector3 = Vector3;
-});
+}; //});
+
+var Leap = {};
+LoadLeap(Leap);
 //# sourceMappingURL=leapmotionts-1.0.9+8391.js.map
