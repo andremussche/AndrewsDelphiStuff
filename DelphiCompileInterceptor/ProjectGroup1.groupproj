@@ -1,0 +1,48 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{D84D346F-FC47-4D09-81EE-0747E00B38BF}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="Project7.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="RBKCompileIntercept.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="Project7">
+			<MSBuild Projects="Project7.dproj"/>
+		</Target>
+		<Target Name="Project7:Clean">
+			<MSBuild Targets="Clean" Projects="Project7.dproj"/>
+		</Target>
+		<Target Name="Project7:Make">
+			<MSBuild Targets="Make" Projects="Project7.dproj"/>
+		</Target>
+		<Target Name="RBKCompileIntercept">
+			<MSBuild Projects="RBKCompileIntercept.dproj"/>
+		</Target>
+		<Target Name="RBKCompileIntercept:Clean">
+			<MSBuild Targets="Clean" Projects="RBKCompileIntercept.dproj"/>
+		</Target>
+		<Target Name="RBKCompileIntercept:Make">
+			<MSBuild Targets="Make" Projects="RBKCompileIntercept.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="Project7;RBKCompileIntercept"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="Project7:Clean;RBKCompileIntercept:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="Project7:Make;RBKCompileIntercept:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>
