@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Library Name="NewLibrary" UID="{6BAEA71C-1331-4683-A563-7BFB47D02C65}" Version="3.0">
+<Services>
+<Service Name="NewService" UID="{C1F14541-D0BA-4FD3-B8AB-71C1CE4C06FC}">
+<Interfaces>
+<Interface Name="Default" UID="{ABFB312B-B427-4A77-BD7E-830C192ED62B}">
+<Documentation><![CDATA[Service NewService. This service has been automatically generated using the RODL template you can find in the Templates directory.]]></Documentation>
+<Operations>
+<Operation Name="Sum" UID="{0EE8F0F2-8910-4B06-A30A-23C900F98934}">
+<Parameters>
+<Parameter Name="Result" DataType="Integer" Flag="Result">
+</Parameter>
+<Parameter Name="A" DataType="Integer" Flag="In" >
+</Parameter>
+<Parameter Name="B" DataType="Integer" Flag="In" >
+</Parameter>
+</Parameters>
+</Operation>
+<Operation Name="GetServerTime" UID="{E1E007CA-8EDB-43BA-AF8C-168D62BD42A0}">
+<Parameters>
+<Parameter Name="Result" DataType="DateTime" Flag="Result">
+</Parameter>
+</Parameters>
+</Operation>
+<Operation Name="StartTimer" UID="{04634EE9-31DA-444D-A85B-3DD20CFA14D2}">
+<Parameters>
+</Parameters>
+</Operation>
+<Operation Name="StopTimer" UID="{807F11E3-211C-4582-ACBA-10823300CB99}">
+<Parameters>
+</Parameters>
+</Operation>
+<Operation Name="ExecuteLongStatementWithProgress" UID="{16C76885-1963-4E9B-AADE-6F7197997697}">
+<Parameters>
+</Parameters>
+</Operation>
+</Operations>
+</Interface>
+</Interfaces>
+</Service>
+</Services>
+<EventSinks>
+<EventSink Name="NewEventSink" UID="{866604D3-BE3C-4FA3-A674-E3BB912B63B7}">
+<Interfaces>
+<Interface Name="Default" UID="{B9022064-A9F0-4226-930B-A8EC3CD5F596}">
+<Operations>
+<Operation Name="NewMethod" UID="{89A03B9F-4ABC-4529-B1E5-9D2039B39564}">
+<Parameters>
+<Parameter Name="NewParam" DataType="AnsiString" Flag="In">
+</Parameter>
+</Parameters>
+</Operation>
+<Operation Name="ProgressEvent" UID="{58960618-C671-47E1-8DB9-07563BAB5137}">
+<Parameters>
+<Parameter Name="aProgress" DataType="Integer" Flag="In">
+</Parameter>
+<Parameter Name="aMax" DataType="Integer" Flag="In">
+</Parameter>
+</Parameters>
+</Operation>
+<Operation Name="TimerEvent" UID="{E4C42E22-5A25-4838-9BC8-4E829C7EF81A}">
+<Parameters>
+<Parameter Name="aTime" DataType="DateTime" Flag="In">
+</Parameter>
+</Parameters>
+</Operation>
+</Operations>
+</Interface>
+</Interfaces>
+</EventSink>
+</EventSinks>
+<Structs>
+</Structs>
+<Enums>
+</Enums>
+<Arrays>
+</Arrays>
+</Library>

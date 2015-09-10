@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>
+        </title>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+        <link rel="stylesheet" href="my.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js">
+        </script>
+        <script src="my.js">
+        </script>
+        <!-- User-generated css -->
+        <style>
+        </style>
+        <!-- User-generated js -->
+        <script>
+            try {
+
+    $(function() {
+
+    });
+
+  } catch (error) {
+    console.error("Your javascript has an error: " + error);
+  }
+        </script>
+    </head>
+    <body>
+        <!-- Home -->
+        <div data-role="page" id="page1">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Worklist
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Kies gebruiker
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page2" data-transition="slide">
+                            Klaas
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page2" data-transition="slide">
+                            Piet
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page2" data-transition="slide">
+                            Jan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+		
+        <!-- Home -->
+        <div data-role="page" id="page2">
+            <div data-theme="a" data-role="header">
+				<a data-role="button" data-inline="true" data-transition="slide" href="#page1"
+				   data-icon="arrow-l" data-iconpos="left" data-direction="reverse" data-rel="back" 
+				   class="ui-btn-left">
+					Terug
+				</a>
+                <h3>
+                    Todo
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Taken
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page3" data-transition="slide">
+                            Plafond sausen
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page3" data-transition="slide">
+                            Muur verven
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page3" data-transition="slide">
+                            Vloer vegen
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+		
+        <div data-role="page" id="page3">
+            <div data-theme="a" data-role="header">
+				<a data-role="button" data-inline="true" data-transition="slide" href="#page2"
+				   data-icon="arrow-l" data-iconpos="left" data-direction="reverse" data-rel="back" 
+				   class="ui-btn-left">
+					Terug
+				</a>
+				<h3>
+                    Plafond sausen
+                </h3>
+            </div>
+            <div data-role="content">
+                <h2>
+                    Werkzaamheden
+                </h2>
+                <h5>
+                    Het plafond moet gesaust worden ivm schimmel.
+                </h5>
+                <h2>
+                    Locatie
+                </h2>
+                <div style="">
+                    <img style="width: 70%; height: 70%" src="http://www.dekabelfabriek.nl/images/thumbs/16/369x480_plattegrond%5B2%5D.jpg" />
+                </div>
+                <h2>
+                    Situatie
+                </h2>
+                <div style="">
+                    <img style="width: 100%; height: 100%" src="http://www.voordeelschilder.nl/images/saus-plafond.jpg" />
+                </div>
+                <div style="">
+                    <img style="width: 100%; height: 100%" src="http://huis-en-tuin.infonu.nl/artikel-foto-upload/doe-het-zelf/45145-het-overschilderen-van-vochtplekken-en-schimmels.jpg" />
+                </div>
+            </div>
+        </div>
+		
+    </body>
+</html>

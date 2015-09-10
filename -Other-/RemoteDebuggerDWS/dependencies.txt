@@ -1,0 +1,9 @@
+SynEdit         = https://synedit.svn.sourceforge.net/svnroot/synedit
+dwscript        = http://dwscript.googlecode.com/svn/trunk
+delphionrails   = http://delphionrails.googlecode.com/svn/trunk
+
+Note: use the modified version of dwsJSCodeGen.pas!
+
+Note2: copy the following files:
+\delphionrails\samples\web\bin\libpng12-0.dll
+\delphionrails\samples\web\bin\libeay32.dll

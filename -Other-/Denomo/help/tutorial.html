@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="author" content="ATopSoft" />
+<meta name="copyright" content="Copyright &copy; 2004-2007, ATopSoft, All Rights Reserved." />
+<meta name="rating" content="Safe For Kids" />
+<meta name="keywords" lang="en" content="meta key" />
+<meta name="description" content="meta desc" />
+
+<title>Denomo -- Tutorials and Rules when fixing memory leak problems</title>
+<style type="text/css">@import url('page.css');</style>
+<link rel="stylesheet" type="text/css" href="page.css" />
+</head>
+
+
+<body>
+<div class="header">
+</div>
+<div class="container">
+	<div class="mainbox">
+		 <div class="nav"><ul>
+<li><a href="index.html">Introduction</a></li>
+<li><a href="inspector.html">Inspector</a></li>
+<li><a href="tutorial.html">Tutorials and Rules</a></li>
+<li><a href="inifile.html">.INI config</a></li>
+<li><a href="forcpp.html">For C++ verion</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="support.html">Support</a></li>
+<li><a href="version.html">Credits and Versions</a></li>
+
+</ul>
+
+		 </div>
+		 <div class="content">This document consists of following tutorials: <br />
+<ul>
+<li><a href="#tutorial-test-leak">Tutorial 1: Test memory leak in a session, step by step</a> </li>
+<li><a href="#tutorial-analyse-output">Tutorial 2: Rules on analyzing the output information</a> </li>
+<li><a href="#tutorial-define-session">Tutorial 3: Rules on defining session</a> </li>
+</ul>
+
+<a id="tutorial-test-leak"></a>
+<div class="plist">
+<h3>Tutorial 1: Test memory leak in a session, step by step: </h3>
+<h5>Step 1: Compile your program:</h5>
+Place the unit "Denomo.pas" as the very first unit under the "uses" section in your project's .dpr file. <br />
+Change project options. In Delphi IDE, go to menu Project->Options->Compiler, be sure "Optimization" is unchecked, and "Stack frames", "Debug information", "Reference info", "Definitions only", "Assertions", and "Use Debug DCUs" are checked. <br />
+
+<h5>Step 2: Run your program:</h5>
+At the early age using Denomo, suggest you run the program from Delphi IDE debugger, so any exception or errors can be caught easily.
+
+<h5>Step 3: Run LeakInspector in the path {Denomo path}\bin to start monitoring:</h5>
+You should see the function buttons enabled, otherwise, check your program source code to ensure Denomo.pas is in the .dpr file's uses clause.
+
+<h5>Step 4: Stop operation and start thinking:</h5>
+Think over how to define a proper session around the point you suspect has memory leak. <br />
+Keep the kernel concept in mind: if you define A is the start of the session and B is the end, your program state at B should be as exactly same as at A.
+
+<h5>Step 5: In your program, do the session for at least one or two times:</h5>
+This is on purpose to make session clean. That's to say, after the session executed times, the delay allocated memory or objects should have be allocated so they won't be wrongly marked as "leak".
+
+<h5>Step 6: In LeakInspector, click button "Inc Session Leak Begin":</h5>
+
+<h5>Step 7: Execute your predefined session in your program:</h5>
+After step 6, only the actions you defined as in a session can be done in your program. Don't do any other actions that have no relation with the session.
+
+<h5>Step 8: In LeakInspector, click button "Inc Session Leak End":</h5>
+Then in LeakInspector output window, all memory blocks aren't freed after the session will be dumped out. <br />
+Please note, not all memory reported are leaks. If your program re-creates objects during a session, though the new object is created to replace the old one, it will still be reported as not freed memory.
+
+</div>
+
+<a id="tutorial-analyse-output"></a>
+<div class="plist">
+<h3>Tutorial 2: Rules on analyzing the output information: </h3>
+Here are several rules on analyzing output information and how to use the information to help debugging memory leaks. <br />
+These rules are very general and may be even wrong under certain environment because memory leak problems are one of the most difficulties in debugging stage and simple rules can't cover all situations. <br />
+<br />
+
+Assume you already know the output information format and understand how to read it. <br />
+If not, <a href="inspector.html#output">here is a detailed explanation on the information.</a> <br />
+
+<h5>Rules 1: Objects written by yourself have highest priority to check, ignore objects from VCL or other code library unless no objects written by you leaks.</h5>
+So you should ignore an object which class is TList, or TStringList, but you must focus an object which class is TYourWrittenList. <br />
+The reason is simple, you should only focus on the issues with highest priority. <br />
+
+<h5>Rules 2: Topper objects have higher priority. </h5>
+Suppose you have two classes,
+<pre>
+TObjectA = class
+end;
+
+TObjectB = class
+private
+  FObjectA: TObjectA;
+end;
+</pre>
+
+Then if both TObjectA and TObjectB are leaked, check TObjectB first because it most like TObjectA will not be leaked after TObjectB leaking is fixed.
+
+<h5>Rules 3: Always keep in mind: memory reported after a session may not be real leaks.</h5>
+During a session, maybe the program free a pre-allocated object and create a new one to replace it, then though such objects are reported after the session because it's created in the session and is not freed after the session, it's not memory leak. <br />
+This may be improved in the future by using better algorithm.
+
+<h5>Rules 4: Thinking before debugging.</h5>
+You should be familiar enough with the code you are debugging. If not, you have to spend more time on it because memory leaking problems are usually hard to debug. <br />
+Think over on the leaked objects. Think whether the leaking is supposed to be. Think whether that "leak" drops to Rule 3.
+
+<h5>Rules 5: Check your code on the objects you suspect leaked.</h5>
+One of Denomo's very useful feature is it can report the stack trace where allocates the memory or objects. <br />
+For each object, exam the stack trace from top to bottom until you find one line is inside the code written by you, then go to the address, see how the memory is allocated. And then go to the place where is supposed to free the object, review code to see whether it is not called or if the session is simple enough, set a breakpoint here to make some debug.
+
+</div>
+
+<a id="tutorial-define-session"></a>
+<div class="plist">
+<h3>Tutorial 3: Rules on defining session: </h3>
+There is only one rule: <b>The state after the session of the program should be restored EXACTLY SAME as the begin of the session.</b> <br />
+<br />
+
+Here are some thinkings about how to keep the state same. <br />
+<h5>The UI state should be exactly same.</h5>
+Here list some examples, <br />
+Items in a list box, list view, combo box, grid, or another things should be exactly same and should not be changed. If you remove all items from a list box then re-create them same, they will still be marked as leak.<br />
+<br />
+
+Content in edit box, memo, rich edit, or other editor component should be same and keep unmodified. <br />
+<br />
+
+Caption on button, label, static text, or other components should be same and keep unmodified. <br />
+
+<h5>The internal data should be exactly same.</h5>
+If some data is delay created, you should execute the session to make the delay create occurs before starting checking memory leak. <br />
+
+<h5>Memory or objects cache.</h5>
+If the cache can be treated as delay created objects, the effect can be eliminated by execute the session before checking. <br />
+If there is always memory or objects are cached in each session, you should better disable the cache temporarily.
+
+</div>
+
+		 </div>
+	</div>
+</div>
+<div class="footer">Copyright &copy; 2007 - 2008, Wang Qi, All Rights Reserved.
+</div>
+</body>
+</html>

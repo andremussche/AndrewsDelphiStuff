@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<demo-model number="1" caption="Hello" birthday="39939.5840304861" price="235.04">
+  <intervals value="12.5"/>
+  <intervals value="25"/>
+  <intervals value="37.5"/>
+  <intervals value="50"/>
+  <intervals value="62.5"/>
+  <sub-node hello="2008 Year"/>
+</demo-model>

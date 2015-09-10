@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="author" content="ATopSoft" />
+<meta name="copyright" content="Copyright &copy; 2004-2007, ATopSoft, All Rights Reserved." />
+<meta name="rating" content="Safe For Kids" />
+<meta name="keywords" lang="en" content="meta key" />
+<meta name="description" content="meta desc" />
+
+<title>Denomo -- Setup a .ini config file to control Denomo's behavior</title>
+<style type="text/css">@import url('page.css');</style>
+<link rel="stylesheet" type="text/css" href="page.css" />
+</head>
+
+
+<body>
+<div class="header">
+</div>
+<div class="container">
+	<div class="mainbox">
+		 <div class="nav"><ul>
+<li><a href="index.html">Introduction</a></li>
+<li><a href="inspector.html">Inspector</a></li>
+<li><a href="tutorial.html">Tutorials and Rules</a></li>
+<li><a href="inifile.html">.INI config</a></li>
+<li><a href="forcpp.html">For C++ verion</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="support.html">Support</a></li>
+<li><a href="version.html">Credits and Versions</a></li>
+
+</ul>
+
+		 </div>
+		 <div class="content">Denomo supports a local or global denomo.ini file to control Denomo's behavior. So now you usually don't need to touch the source code and thus no any version conflict can occur. <br />
+<br />
+
+<b>Denomo searches for denomo.ini in the following sequence: </b><br />
+1, The directory from which the application is loaded. <br />
+2, The current directory. <br />
+3, The root directory of currect logical disk from which the application loaded. <br />
+4, {CSIDL_LOCAL_APPDATA}\denomo. Usually it's C:\Documents and Settings\username\Local Settings\Application Data\denomo <br />
+5, {CSIDL_APPDATA}\denomo. Usually it's C:\Documents and Settings\username\Application Data\denomo <br />
+6, {CSIDL_COMMON_APPDATA}\denomo. Usually it's C:\Documents and Settings\All Users\Application Data\denomo <br />
+7, The Windows home directory. Usually it's C:\WINNT or C:\Windows <br />
+<br />
+
+<b>Create a new denomo.ini: </b><br />
+To create a new denomo.ini, you only need to create an empty file named "denomo.ini" in the directories mentioned above. Then run the program compiled with Denomo once, Denomo will fill the .ini file fields with the default values and then you can modify the values. <br />
+<br />
+
+<b>The structure of denomo.ini </b><br />
+There is no mystery in the .ini file. Each field in it is just the variable name of source file DenomoConfig.pas, and the default value is same as the variable value. <br />
+
+		 </div>
+	</div>
+</div>
+<div class="footer">Copyright &copy; 2007 - 2008, Wang Qi, All Rights Reserved.
+</div>
+</body>
+</html>

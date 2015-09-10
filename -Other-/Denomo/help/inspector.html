@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="author" content="ATopSoft" />
+<meta name="copyright" content="Copyright &copy; 2004-2007, ATopSoft, All Rights Reserved." />
+<meta name="rating" content="Safe For Kids" />
+<meta name="keywords" lang="en" content="meta key" />
+<meta name="description" content="meta desc" />
+
+<title>Denomo -- Leak inspector</title>
+<style type="text/css">@import url('page.css');</style>
+<link rel="stylesheet" type="text/css" href="page.css" />
+</head>
+
+
+<body>
+<div class="header">
+</div>
+<div class="container">
+	<div class="mainbox">
+		 <div class="nav"><ul>
+<li><a href="index.html">Introduction</a></li>
+<li><a href="inspector.html">Inspector</a></li>
+<li><a href="tutorial.html">Tutorials and Rules</a></li>
+<li><a href="inifile.html">.INI config</a></li>
+<li><a href="forcpp.html">For C++ verion</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="support.html">Support</a></li>
+<li><a href="version.html">Credits and Versions</a></li>
+
+</ul>
+
+		 </div>
+		 <div class="content">LeakInspector is a tool to send control command to a Denomo integrated application and get result from Denomo. <br />
+To start LeakInspector, run {Denomo path}\bin\LeakInspector.exe <br />
+<br />
+
+This document consists of following parts: <br />
+<ul>
+<li><a href="#functionlist">Function list</a> </li>
+<li><a href="#session">Understand session</a> </li>
+<li><a href="#parameters">Understand parameters</a> </li>
+<li><a href="#output">Understand output information</a> </li>
+</ul>
+
+<a id="functionlist"></a>
+<div class="plist">
+<h3>Function list: </h3>
+
+<img src="images/denomo-function-list.jpg" alt="Denomo function list" /> <br />
+
+<h5>1, Memory Counter </h5>
+Parameters used: All. <br />
+Reports all memory blocks count. <br />
+
+<h5>2, Inc Session Leak Begin </h5>
+Parameters used: All except Session ID. <br />
+Start a new leak detection session by increasing current Session ID for one. <br />
+
+<h5>3, Inc Session Leak End </h5>
+Parameters used: All except Session ID. <br />
+End a new leak detection session by decreasing current Session ID for one.
+
+<h5>4, List Memory </h5>
+Parameters used: All. <br />
+List all memory blocks with address and size information, maybe stack track included. <br />
+
+<h5>5, Hook Options </h5>
+Parameters used: None. <br />
+Set the options. <br />
+</div>
+
+<br />
+ 
+
+<a id="session"></a>
+<div class="plist">
+<h3>Understand session: </h3>
+
+<img src="images/denomo-session-id.jpg" alt="Understand Denomo session" /> <br />
+
+The term "session" here is used to define a period in which you perform a serial actions on your program to expect some new memory is allocated and they should also be freed during the certain period. <br />
+To be simple, the program's state should be restored exactly same as the point that the session begins when the session ends. <br />
+<br />
+For example, assume you are making a multi-documents editor. <br />
+Now run the program (editor), keep it blank without any document opened. <br />
+
+<h5>1, Correct session example, </h5>
+Start a session while no document is opened, then load an existing document from the disk, then close the document immediately. Now end the session. <br />
+This is a correct session. You start the session while no document is opened, and after the session ends, still no document is opened. So you can expect no any document-related object/memory is left after the session. <br />
+
+<br />
+
+<h5>2, Incorrect session example, </h5>
+Still start a session while no document is opened, then create a new empty document, then load an existing document from the disk, then close the document you just load. Now end the session.  It's a totally wrong session because before the session, there is no document opened but after the session, there is an empty document, so the state changed during the session and isn't restored.  In such a kind of session, memory "leak" is reasonable. At least an empty document object will be "leaked". <br />
+<br />
+
+<h5>Make session clean: </h5>
+If you start a session immediately after the program runs, maybe some delay created objects will be wrongly marked as leak.  To avoid it, you should better perform the same actions for at least one or two times to ensure the delay created objects are created before the session really starts. <br />
+</div>
+
+
+<a id="parameters"></a>
+<div class="plist">
+<h3>Understand parameters: </h3>
+
+<img src="images/denomo-parameters.jpg" alt="Understand Denomo parameters" /> <br />
+
+Parameters are passed to Denomo core code to define the memory scope to detect. <br />
+<h5>1, Memory Types: </h5>
+Denomo tries to mark a memory block with different type if possible.  For example, it will mark a memory block as "Object" if it's allocated from an object's constructor. <br />
+Now there are four memory types: <br />
+A: Memory block: this is the raw type of a memory block, usually it's allocated directly from GetMem. Such memory block is not used for object instance. <br />
+B: Object: this is object type, each memory block is an object instance's body. Usually it's allocated from an object's constructor. <br />
+C: String: each memory block is a ANSI string. <br />
+D: Dynamic array: each memor block is a dynamic array. <br />
+E: GDI objects: the GDI object handles. <br />
+<br />
+Only the selected types of memory blocks will be counted or reported.
+
+<h5>2, Session ID: </h5>
+Beside memory type, Denomo gives each memory block a session ID. This ID is used to distinguish different blocks allocated during different session. Memory blocks with same session ID are in the same group. <br />
+<br />
+One memory block will be counted or reported only if its session is same as the selected Session ID. However, if the selected Session ID is 0, all blocks with any session id will be reported. <br />
+
+</div>
+
+<a id="output"></a>
+<div class="plist">
+<h3>Understand output information: </h3>
+Denomo will output information in plain text. <br />
+For functions "Inc Session Leak End" and "List Memory", the output is the memory block information in a certain format. <br />
+One kind of such output looks like below,
+<pre>
+01308628  BlockSize: 32 Class: TLeakObject
+    ST: 0049EDD5 [LeakGen] [TLeakStrategyItemObject.DoExecuteOnce] [632]
+    ST: 0049EB51 [LeakGen] [TLeakStrategyItem.Execute] [541]
+    ST: 0049F4EB [LeakGen] [TLeakStrategy.Execute] [823]
+    ST: 0049E840 [LeakGen] [TLeakGenerator.PerformLeak] [465]
+    ST: 004A00DA [LeakGenFrame] [TFrameLeakGen.ExecuteLeak] [86]
+    ST: 004A00A0 [LeakGenFrame] [TFrameLeakGen.ActionLeakExecute] [80]
+    ST: 00425A7C [Classes] [TBasicAction.Execute] [10465]
+    ST: 00483AC0 [ActnList] [TContainedAction.Execute] [375]
+    ST: 00484D2C [ActnList] [TCustomAction.Execute] [961]
+    ST: 0042587A [Classes] [TBasicActionLink.Execute] [10394]
+</pre>
+In the first line, the first number 01308628 is the address of the memory block being reported. It's a hex number.<br />
+BlockSize: The size of the memory block allocated. It's a decimal number. 32 means 32 bytes. <br />
+Class: The class name if the memory block is an object. If the memory block is not an object but a raw memory, this field will be GETMEM, indicating it's allocated by system GetMem method. <br />
+<br />
+
+All the following lines start with a prefix "ST:" are the stack trace. <br />
+The first number is the calling address. It's a hex number. <br />
+<br />
+
+There are three extra fields closed in braces. These are the source information of the stack trace. <br />
+The first field is the unit name. <br />
+The second field is the method name. If the method is an object method, the class name will be prefixed ahead. <br />
+The third field is a decimal number indicates the line number in the source code. <br />
+NOTE: the three ultra useful fields may not be outputted if you forget enable TD32 information in your project. <br />
+<br />
+
+The deep of the stack trace may vary. It depends on the value of "StackTraceDepth" in DenomoMemHooker.pass, and also depends on the real callers. <br />
+The calling order is from bottom to top (the top one is the most recent caller), so the calling chain of above output is, <br />
+TBasicActionLink.Execute calls TCustomAction.Execute, TCustomAction.Execute calls TContainedAction.Execute. TLeakStrategyItemObject.DoExecuteOnce is the last called method in the calling chain.
+
+</div>
+
+
+		 </div>
+	</div>
+</div>
+<div class="footer">Copyright &copy; 2007 - 2008, Wang Qi, All Rights Reserved.
+</div>
+</body>
+</html>

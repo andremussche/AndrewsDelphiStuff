@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<title>RO + Node.js demo</title>
+
+	        <script type="text/javascript" src="./RemObjectsSDK.js"></script>	
+        	<script type="text/javascript" src="./NewLibrary_intf.js"></script>	
+        
+		<script type="text/javascript">
+            function btnSumClick()
+            {
+                //var channel = new RemObjects.SDK.HTTPClientChannel("http://localhost:8099/JSON");
+                var channel = new RemObjects.SDK.WebSocketClientChannel("ws://localhost:7000/");                
+                var message = new RemObjects.SDK.JSONMessage();
+                var service = new NewService(channel, message);
+                service.Sum(document.frmForm1.txtValue1.value,
+                            document.frmForm1.txtValue2.value, 
+                            function(result) {
+                                alert('Result: ' + result);
+                            },
+                            function(msg) {
+                                alert('Error: ' + msg.getErrorMessage())
+                            }
+                );
+            };
+            
+	</script>        
+    </head>
+        
+	<body>
+		<h2>RO + Node.js demo</h2>
+		<form name="frmForm1">
+			<input type="text" name="txtValue1" id="txtValue1" value="1"/>
+			<input type="text" name="txtValue2" id="txtValue2" value="2"/>
+			<input type="button" name="btnSum" id="btnSum" value="Sum" onClick="btnSumClick();"/>
+		</form>     
+	</body>
+</html>

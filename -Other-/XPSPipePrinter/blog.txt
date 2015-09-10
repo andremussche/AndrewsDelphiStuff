@@ -1,0 +1,25 @@
+https://plus.google.com/110131086673878874356/posts/WEjKg9JiTdq
+
+I can finally print in Windows 7 to my good old "HP ColorLaserjet 1500" printer!
+I bought a new PC a week ago, but Win7 or HP has no drivers for my Canon scanner and HP printer :-(. 
+In short (I hope to fully explain in a blog later):
+- I installed WinXp in VmWare
+- enabled USB 2.0 in VmWare and connected my HP printer to VmWare
+- installed the HP drivers
+- rebuild the XPS printer driver (otherwise you always get that annoying "save as" dialog) 
+- added a new printer in WinXp, using a new "local port" and a named pipe (e.g. \\.\pipe\printcolor) and using the custom XPS driver
+	- note: install .Net3+ and XPS Essentionals Pack (in this order)
+	- start XPSPipePrinter.exe and add a named pipe (e.g. "printcolor"): it will act as the server
+	- after this you can create the local port and install custom driver
+- shared this XPS printer in WinXp
+- connected to this shared WinXp printer in Win7, using the same rebuild XPS driver (but the 64bit version now)
+- made a small Delphi application (XPSPipePrinter.exe), who runs as the named pipe server in WinXp, and saves the received XPS stream to a .xps file
+- made a small .Net 3.0 application (xpswin.exe) who prints the .xps file to a printer 
+	- note: copy xpswin.exe in the same folder as XPSPipePrinter.exe
+
+So when I want to print something in Win7, I start WinXp in Vmware first, and then print to the shared printer. The Delphi app receives the XPS data from Win7 and via the .Net app it is printed to the HP printer.
+
+Not ideal, but the printer has a lot of (expensive!) toner left, and I don't want to install WinXp on my new PC, so you have to do something... If anyone knows something better: let me know! 
+
+Btw: I have chosen for XPS because it is the internal Win7 format (so no data loss?). However, printing XPS in WinXp is not easy: no command line params available in the XPS Viewer and no native API for WinXp: you have to use .Net 3.0 and NOT a console application or service! You HAVE to print it from a GUI app... So I made a small WinForms app with no form... (otherwise wrong fonts are used etc).
+Maybe I will try the general Ghostscript driver later: print to a .ps (postscript) file and directly print from .ps to the printer (using the mswinpr2 device). Or convert from ps to pdf and then print the pdf?

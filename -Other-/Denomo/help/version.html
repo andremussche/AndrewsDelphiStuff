@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="author" content="ATopSoft" />
+<meta name="copyright" content="Copyright &copy; 2004-2007, ATopSoft, All Rights Reserved." />
+<meta name="rating" content="Safe For Kids" />
+<meta name="keywords" lang="en" content="meta key" />
+<meta name="description" content="meta desc" />
+
+<title>Denomo -- credits, version history and change logs</title>
+<style type="text/css">@import url('page.css');</style>
+<link rel="stylesheet" type="text/css" href="page.css" />
+</head>
+
+
+<body>
+<div class="header">
+</div>
+<div class="container">
+	<div class="mainbox">
+		 <div class="nav"><ul>
+<li><a href="index.html">Introduction</a></li>
+<li><a href="inspector.html">Inspector</a></li>
+<li><a href="tutorial.html">Tutorials and Rules</a></li>
+<li><a href="inifile.html">.INI config</a></li>
+<li><a href="forcpp.html">For C++ verion</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="support.html">Support</a></li>
+<li><a href="version.html">Credits and Versions</a></li>
+
+</ul>
+
+		 </div>
+		 <div class="content">Current version is 2.1.0. <br />
+
+<div class="plist">
+<h3>Credits:</h3>
+<h5>Thanks to <a href="http://users.adelphia.net/~rllibby/" target="_blank">Russell and his great Disams32 and Win32Hook source code.</a> </h5>
+And there are many useful source code on his site. <br />
+<h5>Thanks to <a href="http://www.delphi-jedi.org/" target="_blank">JEDI Project</a> and the great JCLDebug.</h5>
+<h5>Other credits is in the change logs.</h5>
+</div>
+
+<div class="plist versionlist">
+
+<h3>Change logs:</h3>
+<br />
+
+<h5>V 2.1.0. Released at Jun. 9, 2008. Major upgrade version.</h5>
+<b>New:</b> Now support leak detection for C++ programs (BCB and VC). <br />
+<br />
+
+<b>New:</b> Enhanced bad pointer detection. Now free on freed pointer, calling freed object's virtual method, calling freed interface's method, can be detected. <br />
+<br />
+
+<b>Update:</b> Improve the code hook engine so that it won't disturb the stack trace any more. <br />
+<br />
+
+<b>Update:</b> Now there is an option that show warning whenever Denomo runs. Thanks to Sasa Zeman to suggest that. <br />
+<br />
+
+<b>Update:</b> Now there is an option that can limit the log file size, or overwrite the log file rather than appending to it. Thanks to Sasa Zeman to suggest that. <br />
+<br />
+
+<b>Fix:</b> Replace the buggy binary tree algorithm with the Arkadia one. <br />
+<br />
+
+<b>Fix:</b> A bug causes access violation exception when shut down if Denomo is used in a DLL. <br />
+<br />
+
+<b>Fix:</b> An "integer overflow" bug when "overflow checking" is enabled. <br />
+<br />
+
+<b>Remove:</b> DenomoSimpleMM.pas was removed. <br />
+
+<br /><br />
+
+
+<h5>V 2.0.0. Released at Feb. 5, 2008. Major upgrade version.</h5>
+<b>New:</b> Now support GDI leak detection! And more resource leak detection will be added in the future version. <br />
+<br />
+
+<b>New:</b> Add support reporting to log file when check on exit. Thanks to <a href="http://www.szutils.net/">Sasa Zeman</a> to suggest that. <br />
+<br />
+
+<b>New:</b> Add a global .ini config to replace DenomoConfig.pas thus the user don't need to modify the code any more. Thanks to <a href="http://www.szutils.net/">Sasa Zeman</a> to suggest that. <br />
+<br />
+
+<b>New:</b> Add checking for Delphi or debugger running on startup to ensure Denomo is only used for debugging purpose. <br />
+<br />
+
+<b>Fix:</b> A random bug causing dead lock in multi-thread application. <br />
+
+<br /><br />
+
+
+<h5>V 1.0.3. Released at Dec. 8, 2007. Trivial upgrade version.</h5>
+<b>New:</b> Now before reporting leaks, Denomo can remove all memory blocks which are allocated from the same calling path. This feature can significantly suppress the output information.<br />
+
+<br /><br />
+
+
+<h5>V 1.0.2. Released at Nov. 25, 2007. Bug fix version.</h5>
+<b>New:</b> Add DenomoRuntime.dll to wrap all third party source code so you can use the binary directly to enjoy the powful JCLDebug without download JCL library. <br />
+<br />
+
+<b>New:</b> Add support "String" and "Dynamic array" memory type beside object. <br />
+<br />
+
+<b>New:</b> Add the unit DenomoConfig.pas to fully control Denomo's behavior. This makes Denomo less depending on Denomo.inc (the compiler directive version of the config). <br />
+<br />
+
+<b>New:</b> Add a "Save to file" button in LeakInspector to save the report content to a file. <br />
+<br />
+
+<b>Fix:</b> Remove the dependence on SysUtils and Classes, so now Denomo will not wrongly report memory leaks (allocated by unit Classes) when check on exit. <br />
+<br />
+
+<b>Fix:</b> Now report the actual size of a memory block rather than the rounded up one. <br />
+<br />
+
+<b>Update:</b> Significantly optimized the speed of outputing string to richedit in the Inspector. Now it's more than 50 to 100 times faster than older versions.<br />
+Testing on a CeleronD 2.0G HZ 512M Ram, full source code informatio is outputed, reporting around 3000 blocks costs only no more than 2 seconds, 35000 blocks costs about 40 seconds, 70000 blocks costs about 120 seconds. <br />
+Failed on testing on 100,000 blocks reporting due to the small RAM. LeakInspector eat up all of the physical memory and Windows was very busy on swapping memory out. <br />
+But if the host machine has 1 or 2G memory, reporting 100K to 200K blocks is easy. <br />
+
+<br /><br />
+
+
+<h5>V 1.0.1. Released at Nov. 18, 2007. Bug fix version.</h5>
+<b>Fix:</b> Crash in function NewGetMem with float point exception on Delphi 2006, 2007 or FastCode is used. Thanks Alan Garny to report that. <br />
+<br />
+
+<b>Fix:</b> Range Checking error in TSimpleStringBufferWriter.Write. <br />
+<br />
+
+<b>Fix:</b> A bug that wrongly output message to MessageBox. <br />
+<br />
+
+<b>Fix:</b> Suppress the compiling warning messages. Thanks Alan Garny to report that. <br />
+<br />
+
+<b>Update:</b> Remove all "int 3" instructions. Show a message box to prompt when need to break. Thanks Alan Garny to report that. <br />
+<br />
+
+<b>Update:</b> Make the help document more useful. Added some tutorials and rules. <br />
+
+<br /><br />
+
+
+<h3>V 1.0.0. Released at Nov 11, 2007. Initial release.</h3>
+
+</div>
+
+		 </div>
+	</div>
+</div>
+<div class="footer">Copyright &copy; 2007 - 2008, Wang Qi, All Rights Reserved.
+</div>
+</body>
+</html>

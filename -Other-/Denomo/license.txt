@@ -1,0 +1,4 @@
+This work is copyright to Wang Qi (family name: Wang).
+It is released under Mozilla Public License 1.1 (MPL 1.1),
+you may obtain a copy of the License at
+http://www.mozilla.org/MPL/MPL-1.1.html

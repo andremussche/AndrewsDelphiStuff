@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+<body>
+<h3>Socket Test</h3>
+
+<script>
+
+if ("WebSocket" in window)
+{
+  var MySocket = new WebSocket("ws://" + window.location.host);
+
+  MySocket.onopen = function() 
+  { 
+    document.getElementById("memo").value += "Socket open\r\n";
+  };
+
+  MySocket.onmessage = function(evt) 
+  { 
+    document.getElementById("memo").value += evt.data + "\r\n";
+  };
+
+  MySocket.onclose = function() 
+  { 
+    document.getElementById("memo").value += "Socket closed\r\n";
+  };
+
+}
+else document.getElementById("memo").value += "WebSocket not supported in this browser\r\n";
+
+function SendIt()
+{
+  var t = document.getElementById("sendtext");
+  MySocket.send(t.value);
+  t.value = "";
+}
+
+function CloseFrame()
+{
+  MySocket.close();
+}
+
+</script>
+
+<textarea id="memo" rows="20" cols="60"></textarea>
+<br />
+<input id="sendtext" type=text><button type="submit" onclick="SendIt()">Send</button>
+<button type="submit" onclick="CloseFrame()">Close</button>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)http://www.atopon.org/mandel/# -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Mandelbrot Set in HTML 5 Canvas</title>
+  
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="./Mandelbrot Set in HTML 5 Canvas_files/mandel.css">
+
+  <script type="text/javascript" src="./Mandelbrot Set in HTML 5 Canvas_files/util.js"></script>
+  <script type="text/javascript" src="./Mandelbrot Set in HTML 5 Canvas_files/canvas_common.js"></script>
+  <script type="text/javascript" src="./Mandelbrot Set in HTML 5 Canvas_files/logger_common.js"></script>
+  <script type="text/javascript" src="./Mandelbrot Set in HTML 5 Canvas_files/mandel.js"></script>
+
+  <script type="application/x-javascript">
+
+    function load ( w, h )
+    {
+      // initLogger();
+      initMandel("canvas", w, h);
+      resetMandel();
+      computeMandel();
+    }
+
+  </script>
+</head>
+
+<body onload="load(360, 360);">
+
+<h1>Mandelbrot Set in HTML 5 Canvas v0.02</h1>
+
+<p class="copyright">written by Kostas Symeonidis ©2009-2011 atopon.org</p>
+
+<div>
+  <div id="panel">
+    <table>
+      <thead>
+      <tr>
+        <td colspan="2">Complex plane coordinates:</td>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td>Elapsed:</td>
+        <td id="timing" class="dynamic">312 milliseconds</td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr>
+        <td>X<sub>min</sub></td>
+        <td id="pmin" class="dynamic">-2.25</td>
+      </tr>
+      <tr>
+        <td>X<sub>max</sub></td>
+        <td id="pmax" class="dynamic">0.75</td>
+      </tr>
+      <tr>
+        <td>Y<sub>min</sub></td>
+        <td id="qmin" class="dynamic">-1.5</td>
+      </tr>
+      <tr>
+        <td>Y<sub>max</sub></td>
+        <td id="qmax" class="dynamic">1.5</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h2>Instructions</h2>
+
+    <p>
+      <strong>Click &amp; drag</strong> a new square on the mandelbrot set on the right to zoom in an area of your
+      choice.<br>
+      Click the <strong>[reset]</strong> button below to reset the Mandelbrot set to its normal coordinates.
+    </p>
+
+    <p><input type="button" value="reset" onclick="resetMandel(); computeMandel();"></p>
+
+    <p>
+      Try different sizes:<br>
+      &nbsp;–&nbsp;<a href="./Mandelbrot Set in HTML 5 Canvas_files/Mandelbrot Set in HTML 5 Canvas.htm" onclick="load(240,240);">small (240x240)</a><br>
+      &nbsp;–&nbsp;<a href="./Mandelbrot Set in HTML 5 Canvas_files/Mandelbrot Set in HTML 5 Canvas.htm" onclick="load(360,360);">normal (360x360)</a><br>
+      &nbsp;–&nbsp;<a href="./Mandelbrot Set in HTML 5 Canvas_files/Mandelbrot Set in HTML 5 Canvas.htm" onclick="load(480,480);">large (480,480)</a><br>
+      &nbsp;–&nbsp;<a href="./Mandelbrot Set in HTML 5 Canvas_files/Mandelbrot Set in HTML 5 Canvas.htm" onclick="load(1024,1024);">huge (1024,1024)</a><br>
+    </p>
+
+    <p><input type="button" value="Convert to PNG" onclick="convertToPng(&#39;canvas&#39;, &#39;output&#39;);"></p>
+
+  </div>
+
+  <canvas id="canvas" width="1024" height="1024">
+    It seems that your browser does not support the "canvas" tag. You are either
+    using an out-dated browser, or a "modern" browser that doesn't really support modern
+    technology. Upgrade to something better is highly recommended.
+  </canvas>
+
+</div>
+
+
+<p class="footnote">
+  This page is an experiment on HTML 5 and the &lt;canvas&gt; tag.
+  It is compatible with Google Chrome, Firefox 1.5+, Opera, Safari and IE9 browsers.<br>
+
+  It can be used as a benchmark of the Javascript engine of your browser in combination
+  with the client machine that it runs on. For example a Google Chrome on a reasonable 2GHz+
+  dual-core machine should produce a 360x360 Mandelbrot set in about 0.1 second.<br>
+
+  The fastest browser currently (March 2011) seems to be
+  <a href="http://www.mozilla-europe.org/en/firefox/">Firefox 4</a>
+  followed by <a href="http://www.google.com/chrome">Google Chrome</a> and
+  <a href="http://www.opera.com/">Opera</a>.
+</p>
+
+<h2>License and Contact Information</h2>
+
+<p style="color: #666; width: 640px"><strong>Mandelbrot Set in HTML 5 Canvas</strong> is released as open source under
+  the
+  <strong>GNU General Public License version 3 (GPLv3)</strong>
+  For more information on this, and how to apply and follow the GNU GPL, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+</p>
+
+<p style="color: #666; width: 640px">
+  Contact the author using the CyLog Software <a href="http://www.cylog.org/contact-us.do">"Contact Us"</a> form.
+</p>
+
+<!--
+<h5>PNG Output (right-click to Save as...)</h5>
+<div id="output" style="border: 1px solid #eee; padding:4px;"></div>
+-->
+
+<!--
+<textarea id="logger" cols="120" rows="10"></textarea>
+-->
+
+<!-- Google analytics -->
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./Mandelbrot Set in HTML 5 Canvas_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+  try
+  {
+    var pageTracker = _gat._getTracker("UA-1023832-3");
+    pageTracker._trackPageview();
+  }
+  catch(err)
+  {
+  }
+</script>
+<!-- End of Google analytics -->
+
+
+
+</body></html>

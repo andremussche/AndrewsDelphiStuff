@@ -1,0 +1,25 @@
+<Library Name="NewLibrary" UID="{6BAEA71C-1331-4683-A563-7BFB47D02C65}" Documentation="">
+   <Services>
+      <Service Name="NewService" UID="{C1F14541-D0BA-4FD3-B8AB-71C1CE4C06FC}">
+        <Interfaces>
+           <Interface Name="Default" UID="{ABFB312B-B427-4A77-BD7E-830C192ED62B}" Documentation="Service NewService. This service has been automatically generated using the RODL template you can find in the Templates directory.">
+      <Operations>
+         <Operation Name="Sum" UID="{0EE8F0F2-8910-4B06-A30A-23C900F98934}" Documentation="">
+      <Parameters>
+         <Parameter Name="A" DataType="Integer" Flag="In" />
+         <Parameter Name="B" DataType="Integer" Flag="In" />
+         <Parameter Name="Result" DataType="Integer" Flag="Result" />
+      </Parameters>
+         </Operation>
+         <Operation Name="GetServerTime" UID="{E1E007CA-8EDB-43BA-AF8C-168D62BD42A0}" Documentation="">
+      <Parameters>
+         <Parameter Name="Result" DataType="DateTime" Flag="Result" />
+      </Parameters>
+         </Operation>
+      </Operations>
+
+           </Interface> 
+        </Interfaces>
+      </Service>
+   </Services>
+</Library>

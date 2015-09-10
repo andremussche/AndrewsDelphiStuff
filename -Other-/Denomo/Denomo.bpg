@@ -1,0 +1,29 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = LeakInspector.exe LeakGenerator.exe DenomoRuntime.dll DenomoCPP.dll
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+LeakInspector.exe: Inspector\LeakInspector.dpr
+  $(DCC)
+
+LeakGenerator.exe: LeakGenerator\LeakGenerator.dpr
+  $(DCC)
+
+DenomoRuntime.dll: RuntimeDll\DenomoRuntime.dpr
+  $(DCC)
+
+DenomoCPP.dll: DenomoCPP\DenomoCPP.dpr
+  $(DCC)
+
+

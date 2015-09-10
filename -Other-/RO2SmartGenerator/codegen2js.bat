@@ -1,0 +1,1 @@
+codegen2.exe /lang:javascript /type:intf /rodl:".\server\NewLibrary.rodl" /template:template.intf.smart.pas /out:NewLibrary.pas 

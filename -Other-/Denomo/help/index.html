@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="author" content="ATopSoft" />
+<meta name="copyright" content="Copyright &copy; 2004-2007, ATopSoft, All Rights Reserved." />
+<meta name="rating" content="Safe For Kids" />
+<meta name="keywords" lang="en" content="meta key" />
+<meta name="description" content="meta desc" />
+
+<title>Denomo</title>
+<style type="text/css">@import url('page.css');</style>
+<link rel="stylesheet" type="text/css" href="page.css" />
+</head>
+
+
+<body>
+<div class="header">
+</div>
+<div class="container">
+	<div class="mainbox">
+		 <div class="nav"><ul>
+<li><a href="index.html">Introduction</a></li>
+<li><a href="inspector.html">Inspector</a></li>
+<li><a href="tutorial.html">Tutorials and Rules</a></li>
+<li><a href="inifile.html">.INI config</a></li>
+<li><a href="forcpp.html">For C++ verion</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="support.html">Support</a></li>
+<li><a href="version.html">Credits and Versions</a></li>
+
+</ul>
+
+		 </div>
+		 <div class="content">Denomo is a comprehensive memory and resource leak detection tool for Delphi. <br />
+It supports many useful features to help you to detect and locate the leak quickly. <br />
+<br />
+
+Current version is 2.1.0. <br />
+
+<div class="plist">
+<h3>Quick start </h3>
+
+<h5>1, Modify you project's code. </h5>
+Place the unit "Denomo.pas" as the very first unit under the "uses" section in your project's .dpr file. <br />
+If you use another memory manager explicitly, e.g, FastMM, put the unit "Denomo.pas" just under the memory manager. <br />
+
+<h5>2, Change project options in Delphi project. </h5>
+In Delphi, in your project to detect memory leak, go to menu Project->Options->Compiler, be sure "Optimization" is unchecked, and "Stack frames", "Debug information", "Reference info", "Definitions only", "Assertions", and "Use Debug DCUs" are checked. <br />
+
+<h5>3, Compile and run your project. </h5>
+
+<h5>4, Run bin\LeakInspector to start monitoring. </h5>
+
+<h5>5, Click button "Inc Session Leak Begin". </h5>
+
+<h5>6, Do something you suspect has memory leak. </h5>
+
+<h5>7, Click button "Inc Session Leak End", then check the output text. </h5>
+</div>
+
+<br />
+
+<div class="plist">
+<h3>Features and advantages</h3>
+<h5>1, Low level memory leak detection. </h5>
+Detect memory leak allocated by function GetMem (the kernel function of Delphi memory manager). <br />
+
+<h5>2, Object level memory leak detection. </h5>
+Detect object leak allocated by object constructor. <br />
+
+<h5>3, Keep stack trace of the allocate functions. </h5>
+Once any memory leaked, the stack trace can help you to locate the address where the leak is allocated. <br />
+
+<h5>4, Eliminate leaked child objects created in constructor. </h5>
+If any objects created in object A's constructor, then if A is leaked (not freed), the objects created in its constructor will not be reported as leak. <br />
+This feature will significantly suppress the leak report amount so to make you focus on the objects that are really leaked. <br />
+
+<h5>5, Leak detection during a certain session. </h5>
+You can inspect the memory leak during a certain period rather than only monitor the whole program life. <br />
+
+<h5>6, Leak report on program exits. </h5>
+Just like many other memory leak detection tools do. <br />
+See option CheckLeakOnExit in file DenomoConfig.pas <br />
+
+<h5>7, Leak source locations. </h5>
+Denomo can report exact source information such as unit name, procedure name, line number, if TD32 debug information is available. <br />
+
+<h5>8, Bad pointer detection. </h5>
+If the program trying to free a memory block that has been freed, or calling a method of a freed object, or calling a method of a freed interface, Denomo can detect and report it. <br />
+Disabled by default. See option KeepTrackOnFreedBlock and KeepDetailedTrackOnFreedBlock in file DenomoConfig.pas <br />
+
+<h5>9, Don't depend on any memory manager.</h5>
+If the default memory manager is not compatible with leak detection, Denomo will use a safe way to be compatible with those memory manager. <br />
+
+<h5>10, Huge leak reporting is fast than ever. Handling tens of thousands of leaks is a piece of cake.</h5>
+The leaking reporting performance has been highly optmized since version 1.0.2. <br />
+Testing on a CeleronD 2.0G HZ 512M Ram, full source code informatio is outputed, reporting around 3000 blocks costs only no more than 2 seconds, 35000 blocks costs about 40 seconds, 70000 blocks costs about 120 seconds. <br />
+
+<h5>11, Support GDI leak detection.</h5>
+And more resource leak detection will be added in the future versions.<br />
+
+<h5>12, Works on Delphi 6, Delphi 7 and Delphi 2007.</h5>
+Other versions Delphi are not tested on. You will be much appreciated if you test this work with Delphi 5, Delphi 2005, 2006, and any other 32 bits Delphi versions. <br />
+
+</div>
+
+<br />
+
+Denomo has been test on: Delphi 6, Delphi 7, Delphi 2007, object allocation heavy application (more than 100K objects are allocated). <br />
+Denomo has NOT been test on: Delphi 3-5, Delphi 2005, Delphi 2006, thread heavy application (many threads and each thread allocates or frees memory frequently). <br />
+If you can help me to test in the environment that has not been test, much credit will give you. <br />
+
+<br />
+
+Denomo source code includes following parts, <br />
+1, The core code to hook memory manager functions. See file Denomo.pas and DenomoMemHooker.pas. <br />
+2, The service code to do actual functions such as memory block statistic, memory status report, etc. See file DenomoHost.pas and DenomoUtils.pas. <br />
+3, The leak generator classes simulate memory and object leak for test purpose. See folder LeakGenerator. <br />
+All above three parts are in project LeakGenerator. <br />
+4, Inspector code to inspect and monitor the memory status. This is a tool to send command to the application to debug and get result from it. See folder Inspector. <br />
+This part is in project LeakInspector. <br />
+5, A simple memory manager. See file DenomoSimpleMM.pas. <br />
+
+<br />
+
+To do list (Px is the priority, priority is from 9 to 1, highest to lowest): <br />
+1, P9, Support trust source file/class/procedure so no detection on those procedures. <br />
+2, P8, Support memory usage statistic with different criteria such as allocated from same address, same size, etc. <br />
+
+		 </div>
+	</div>
+</div>
+<div class="footer">Copyright &copy; 2007 - 2008, Wang Qi, All Rights Reserved.
+</div>
+</body>
+</html>

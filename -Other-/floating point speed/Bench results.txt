@@ -1,0 +1,33 @@
+Note: everything single precision
+
+OpenCL, GPU (ATI), parallel
+1024x1024
+73.7ms
+-------
+OpenCL, GPU (ATI), single
+200x200
+519ms
+--
+400x400
+12s (!)
+
+OpenCL, CPU, Intel i5, parallel
+1024x1024
+126ms
+-------
+OpenCL, CPU, Intel i5, single
+1024x1024
+243ms
+
+Delphi 2000 + XE2, 32bit
+1024x1024
+418.2ms
+
+Delphi XE2, 64bit  {$EXCESSPRECISION OFF}
+1024x1024
+300ms
+
+Google Chrome
+http://www.atopon.org/mandel/#
+1024x1024
+315ms

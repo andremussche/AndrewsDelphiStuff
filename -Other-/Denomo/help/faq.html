@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="author" content="ATopSoft" />
+<meta name="copyright" content="Copyright &copy; 2004-2007, ATopSoft, All Rights Reserved." />
+<meta name="rating" content="Safe For Kids" />
+<meta name="keywords" lang="en" content="meta key" />
+<meta name="description" content="meta desc" />
+
+<title>Denomo -- Frequently Asked Questions (FAQ)</title>
+<style type="text/css">@import url('page.css');</style>
+<link rel="stylesheet" type="text/css" href="page.css" />
+</head>
+
+
+<body>
+<div class="header">
+</div>
+<div class="container">
+	<div class="mainbox">
+		 <div class="nav"><ul>
+<li><a href="index.html">Introduction</a></li>
+<li><a href="inspector.html">Inspector</a></li>
+<li><a href="tutorial.html">Tutorials and Rules</a></li>
+<li><a href="inifile.html">.INI config</a></li>
+<li><a href="forcpp.html">For C++ verion</a></li>
+<li><a href="features.html">Features</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="support.html">Support</a></li>
+<li><a href="version.html">Credits and Versions</a></li>
+
+</ul>
+
+		 </div>
+		 <div class="content"><a id="top"></a><b>General</b><br /> <ul><li><a href="#faq1">1, What's Denomo?</a></li>
+<li><a href="#faq2">2, How to integrate Denomo to my project?</a></li>
+<li><a href="#faq3">3, I'm using LeakInspector to exam the memory, what does the mysterious output information mean?</a></li>
+<li><a href="#faq4">4, When should I use DenomoSimpleMM instead of the default memory manager?</a></li>
+<li><a href="#faq5">5, The stack trace is very rough. Many caller procedures are skipped and not reported, why?</a></li>
+<li><a href="#faq6">6, Why there is no source information in the memory leak report?</a></li>
+<li><a href="#faq7">7, What does "Free twice" or "Double free" mean? And how to enable or disable this detection?</a></li>
+</ul> <br /><b>Reliability</b><br /> <ul><li><a href="#faq8">1, If Denomo reports NO memory leaks on exit and in any session, does it mean there is no memory leak in my program?</a></li>
+<li><a href="#faq9">2, If Denomo reports memory leaks on exit, does it mean those leaks are really memory leak?</a></li>
+<li><a href="#faq10">3, If Denomo reports memory leaks in a session, does it mean those leaks are really memory leak?</a></li>
+<li><a href="#faq11">4, How to distinguish fake leak?</a></li>
+</ul> <br /><b>Contact and feedback</b><br /> <ul><li><a href="#faq12">1, Where is the official Denomo website?</a></li>
+<li><a href="#faq13">2, Who is the original author of Denomo?</a></li>
+<li><a href="#faq14">3, How to contact the original author?</a></li>
+</ul> <br /><b>License and redistribute</b><br /> <ul><li><a href="#faq15">1, What's the license of Denomo?</a></li>
+<li><a href="#faq16">2, I've improved the code, can I redistribute the modified code to others?</a></li>
+</ul> <br /><b>For newbies</b><br /> <ul><li><a href="#faq17">1, After adding "Denomo" to the "uses" clause, why Delphi reports error that "File not found: 'Denomo.dcu'"?</a></li>
+<li><a href="#faq18">2, When running my program with Denomo inside, why Denomo reports an error that some DLLs can't be found?</a></li>
+</ul> <br /><br />
+<hr width="%100" /><a id="faq1"></a><b>What's Denomo?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Denomo is a debug assistant tool to let programmers easily detect memory leak and locate the memory leak source quickly.<br /><br /><br />
+<a id="faq2"></a><b>How to integrate Denomo to my project?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Place the unit "Denomo.pas" as the very first unit under the "uses" section in your project's .dpr file.<br />
+If you use another memory manager explicitly, e.g, FastMM, put the unit "Denomo.pas" just under the memory manager. <br />
+NOTE: You should only include that unit in your internal debug version. NEVER put it into the release version because that unit is only useful when debugging and it will cause more memory and slightly slow down the program.<br /><br /><br />
+<a id="faq3"></a><b>I'm using LeakInspector to exam the memory, what does the mysterious output information mean?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+<a href="inspector.html#output">Here is a detailed explanation on the information.</a><br /><br /><br />
+<a id="faq4"></a><b>When should I use DenomoSimpleMM instead of the default memory manager?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+If you enabled the option KeepTrackOnFreedBlock in file DenomoConfig.pas, and you use Delphi 2006, 2007, or FastMM memory manager, you are highly recommended to use DenomoSimpleMM because FastMM has a feature that conflicts with Denomo.<br /><br /><br />
+<a id="faq5"></a><b>The stack trace is very rough. Many caller procedures are skipped and not reported, why?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Maybe you forget to enable stack frames. In Delphi IDE, click menu Project->Options->Compiler, enable "Stack frames" in "Code generation" section.<br />
+Denomo uses frame based stack algorithm to get the stack trace, so if "Stack frames" is not enable, the compiler will not generate stack frame for many simple procedures.<br /><br /><br />
+<a id="faq6"></a><b>Why there is no source information in the memory leak report?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+To report source information, you must enable TD32 information. In Delphi IDE, click menu Project->Options->Linker, see "EXE and DLL options".<br /><br /><br />
+<a id="faq7"></a><b>What does "Free twice" or "Double free" mean? And how to enable or disable this detection?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Option KeepTrackOnFreedBlock and KeepDetailedTrackOnFreedBlock in file DenomoConfig.pas can enable/disable this feature.<br />
+"Free twice" means a memory block is free again after it has been freed.<br />
+Such bug can cause very hard caught access violation errors.<br />
+So this feature is very useful.<br />
+But be careful with this feature. Enabling this feature will cause memory usage grows dramatically and if your program uses a lot of memory and runs for relative long time during debugging, all memory will be eaten up eventually.<br />
+<br />
+And If you use FastMM, Delphi 2006 or 2007, they have already had built-in detection on this problem.<br /><br /><br />
+<hr width="%100" /><a id="faq8"></a><b>If Denomo reports NO memory leaks on exit and in any session, does it mean there is no memory leak in my program?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+The answer is YES for most programs. It means your project has no any memory leak that allocated by Delphi memory manager (GetMem), and of course also means no any objects are leaked.<br />
+But if your project heavily depends on Windows memory allocation function such as VirtualAlloc, GlobalAlloc, HeapAlloc, etc, Denomo can't detect if any memory leaks. However, the good news is detection on Windows memory allocation functions will be added in the future release.<br /><br /><br />
+<a id="faq9"></a><b>If Denomo reports memory leaks on exit, does it mean those leaks are really memory leak?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Definitely yes. On exiting program, Denomo reports all memory blocks that aren't freed. When Denomo does that report, your program has been in the final stage and doesn't have chance to free any memory. So the leaks are really leaks.<br />
+<br />
+However, in my personal opinion, you usually don't need to care such "leak" too much unless you are rich in time. Because after the program exits, the OS will reclaim all memory from your program, so your program will never leak memory after it exits.<br />
+<br />
+Focus on session leak detection rather than on exit leak.<br /><br /><br />
+<a id="faq10"></a><b>If Denomo reports memory leaks in a session, does it mean those leaks are really memory leak?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Maybe yes, maybe no, it depends.<br />
+In a session, Denomo can only keep track of which memory block is new allocated in the session, and after the session, Denomo will report the new memory blocks as leaked if they still exist after the session.<br />
+Then the problem is, in the session, if the program frees a memory block which is allocated before the session, and then allocates a new block to replace the old block on purpose, that new block will be marked as "leak" though it is not a real leak.<br />
+Delphi VCL often does the fake leak. For instance, in unit Graphics, the graphics object such as TPen will frequently call TResourceManager.ChangeResource to free and allocate new memory block.<br /><br /><br />
+<a id="faq11"></a><b>How to distinguish fake leak?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Usually you'd better focus on the leaks that really allocated from within your code rather than VCL or other huge code library. To know whether it's allocated by your code, see the stack trace. If there is no address in your code range, it usually means it's not leak by your fault.<br /><br /><br />
+<hr width="%100" /><a id="faq12"></a><b>Where is the official Denomo website?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+<a href="http://www.kbasm.com/" target="_blank">http://www.kbasm.com/</a><br /><br /><br />
+<a id="faq13"></a><b>Who is the original author of Denomo?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Wang Qi (family name: Wang), from China, Beijing.<br /><br /><br />
+<a id="faq14"></a><b>How to contact the original author?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Send mail to "kbasm.com AT gmail D.O.T com"<br />
+Bug report, feature request, or any discussion on Denomo, are welcome.<br /><br /><br />
+<hr width="%100" /><a id="faq15"></a><b>What's the license of Denomo?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+MPL 1.1.<br />
+You may obtain a copy of the License at <a href="http://www.mozilla.org/MPL/MPL-1.1.html" target="_blank">http://www.mozilla.org/MPL/MPL-1.1.html</a><br /><br /><br />
+<a id="faq16"></a><b>I've improved the code, can I redistribute the modified code to others?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+Yes, according to the license. But you are highly recommended and encouraged to send the modified code to the original author. The reason is simple. The original author may decide to include the improvement in the "official" release to improve Denomo's quality.<br /><br /><br />
+<hr width="%100" /><a id="faq17"></a><b>After adding "Denomo" to the "uses" clause, why Delphi reports error that "File not found: 'Denomo.dcu'"?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+You need to add the path where Denomo sits in to your project search path.<br />
+In Delphi IDE, click menu Projects then Options, in the pop up dialog, switch to the "Directories and Conditionals" tab, then add the path of Denomo and DenomoDisasm32 to the "Search path".<br /><br /><br />
+<a id="faq18"></a><b>When running my program with Denomo inside, why Denomo reports an error that some DLLs can't be found?</b>&nbsp; &nbsp; <a href="#top"><font size="-1">Top</font></a><br /><br />
+You need to change RuntimeDllDirectory in DenomoConfig.pas to ensure it points to where DenomoRuntime.dll is. Another better approach is just leave that constant blank ('') and copy DenomoRuntime.dll to where your program is.<br /><br /><br />
+
+		 </div>
+	</div>
+</div>
+<div class="footer">Copyright &copy; 2007 - 2008, Wang Qi, All Rights Reserved.
+</div>
+</body>
+</html>

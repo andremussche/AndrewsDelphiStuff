@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Library Name="NewLibrary" UID="{05E0C9DE-D4DA-4DF3-B11B-16F8BA019F10}" Version="3.0">
+<Services>
+<Service Name="NewService" UID="{588306CC-BBE8-425B-AE5F-654A1A62BC0C}">
+<Interfaces>
+<Interface Name="Default" UID="{56229586-01AD-440D-BE37-1EB6D56C0CA2}">
+<Documentation><![CDATA[Service NewService. This service has been automatically generated using the RODL template you can find in the Templates directory.]]></Documentation>
+<Operations>
+<Operation Name="Sum" UID="{4478AB8A-358E-4CA5-95FC-F5A0DB45D31E}">
+<Parameters>
+<Parameter Name="Result" DataType="Integer" Flag="Result">
+</Parameter>
+<Parameter Name="A" DataType="Integer" Flag="In" >
+</Parameter>
+<Parameter Name="B" DataType="Integer" Flag="In" >
+</Parameter>
+</Parameters>
+</Operation>
+<Operation Name="GetServerTime" UID="{4F8355F3-13C9-4761-A376-740F42D5512E}">
+<Parameters>
+<Parameter Name="Result" DataType="DateTime" Flag="Result">
+</Parameter>
+</Parameters>
+</Operation>
+<Operation Name="TestParams" UID="{04425E64-A65F-4AB2-A8B8-B469D66C5EAB}">
+<Parameters>
+<Parameter Name="Result" DataType="Boolean" Flag="Result">
+</Parameter>
+<Parameter Name="InParamInt" DataType="Integer" Flag="In" >
+</Parameter>
+<Parameter Name="InParamAnsi" DataType="AnsiString" Flag="In" >
+</Parameter>
+<Parameter Name="InParamBool" DataType="Boolean" Flag="In" >
+</Parameter>
+<Parameter Name="InParamCur" DataType="Currency" Flag="In" >
+</Parameter>
+<Parameter Name="InParamDatetime" DataType="DateTime" Flag="In" >
+</Parameter>
+<Parameter Name="InParamDec" DataType="Decimal" Flag="In" >
+</Parameter>
+<Parameter Name="InParamDouble" DataType="Double" Flag="In" >
+</Parameter>
+<Parameter Name="InParamInt64" DataType="Int64" Flag="In" >
+</Parameter>
+<Parameter Name="InParamUtf8" DataType="Utf8String" Flag="In" >
+</Parameter>
+<Parameter Name="InParamWide" DataType="WideString" Flag="In" >
+</Parameter>
+<Parameter Name="OutParamAnsi" DataType="AnsiString" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamBool" DataType="Boolean" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamCurr" DataType="Currency" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamDatetime" DataType="DateTime" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamDec" DataType="Decimal" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamDouble" DataType="Double" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamInt64" DataType="Int64" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamInt" DataType="Integer" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamUtf8" DataType="Utf8String" Flag="Out" >
+</Parameter>
+<Parameter Name="OutParamWide" DataType="WideString" Flag="Out" >
+</Parameter>
+<Parameter Name="InOutParam" DataType="AnsiString" Flag="InOut" >
+</Parameter>
+</Parameters>
+</Operation>
+<Operation Name="TestEnum" UID="{3E68C7C9-2C61-4D89-B662-9C6A399E5BF8}">
+<Parameters>
+<Parameter Name="Result" DataType="NewEnum" Flag="Result">
+</Parameter>
+<Parameter Name="NewParam" DataType="NewEnum" Flag="In" >
+</Parameter>
+</Parameters>
+</Operation>
+</Operations>
+</Interface>
+</Interfaces>
+</Service>
+</Services>
+<Structs>
+</Structs>
+<Enums>
+<Enum Name="NewEnum" UID="{EB8D373D-BB41-4015-8155-5A8C65D1CA67}" Prefix="0">
+<EnumValues>
+<EnumValue Name="Enum1">
+</EnumValue>
+<EnumValue Name="Enum2">
+</EnumValue>
+<EnumValue Name="Enum3">
+</EnumValue>
+</EnumValues>
+</Enum>
+</Enums>
+<Arrays>
+</Arrays>
+</Library>
